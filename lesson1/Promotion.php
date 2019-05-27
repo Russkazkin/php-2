@@ -24,7 +24,7 @@ class Promotion
         $this->description = $description;
     }
 
-    public function getPromotionInfo( bool $print=false)
+    public function getPromotionInfo( bool $html=false)
     {
         $render = '<h3>' . $this->title . '</h3>' .
             '<p>Время проведеия с ' . $this->dateStart . ' по ' . $this->dateEnd . '</p>' .
@@ -35,7 +35,7 @@ class Promotion
         $promoArr['title'] = $this->title;
         $promoArr['description'] = $this->description;
 
-        if ($print){
+        if ($html){
             echo $render;
             return null;
         }else{
