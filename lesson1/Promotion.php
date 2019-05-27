@@ -8,12 +8,13 @@ class Promotion
     private $title;
     private $description;
 
+
     /**
      * Promotion constructor.
-     * @param $dateStart
-     * @param $dateEnd
-     * @param $title
-     * @param $description
+     * @param string $title
+     * @param string $description
+     * @param string|null $dateStart
+     * @param string|null $dateEnd
      */
     public function __construct(string $title, string $description, string $dateStart = null, string $dateEnd = null)
     {
@@ -23,5 +24,22 @@ class Promotion
         $this->description = $description;
     }
 
+    public function getPromotionInfo( bool $print=false)
+    {
+        $render = '<h3>' . $this->title . '</h3>' .
+            '<p>Время проведеия с ' . $this->dateStart . ' по ' . $this->dateEnd . '</p>' .
+            '<p>'. $this->description  .'</p>';
+        $promoArr = [];
+        $promoArr['dateStart'] = $this->dateStart;
+        $promoArr['dateEnd'] = $this->dateEnd;
+        $promoArr['title'] = $this->title;
+        $promoArr['description'] = $this->description;
 
+        if ($print){
+            echo $render;
+            return null;
+        }else{
+            return $promoArr;
+        }
+    }
 }

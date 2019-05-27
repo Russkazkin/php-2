@@ -6,4 +6,6 @@ $promo1 = new Promotion('Акция', 'Только в июне: новая ак
 $promo2 = new Promotion('Ежегодная акция', 'Описание ежегодной акции');
 var_dump($promo1);
 var_dump($promo2);
+$promo2->getPromotionInfo(true);
+print_r($promo2->getPromotionInfo());
 
