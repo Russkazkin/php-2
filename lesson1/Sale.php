@@ -28,6 +28,10 @@ class Sale extends Promotion
         $this->description = $description ?? "Скидка {$this->discount}% на категорию {$this->category}";
     }
 
+    /**
+     * В базовый метод добавлены новые свойства
+     * @return array
+     */
     public function getPromotionArr(): array
     {
         $promoArr = parent::getPromotionArr();
@@ -38,6 +42,7 @@ class Sale extends Promotion
 
 
     /**
+     * Метод для получения цены со скидкой
      * @param int $priceValue
      * @return int
      */

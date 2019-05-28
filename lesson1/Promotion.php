@@ -27,6 +27,10 @@ class Promotion
         $this->title = $title;
         $this->description = $description;
     }
+
+    /**
+     * Метод выводит готовый HTML с описанием акции
+     */
     public function getPromotionRender() : void
     {
         echo '<h3>' . $this->title . '</h3>' .
@@ -34,6 +38,10 @@ class Promotion
             '<p>'. $this->description  .'</p>';
     }
 
+    /**
+     * Метод возвращает свойства объекта в виде массива
+     * @return array
+     */
     public function getPromotionArr() : array
     {
         $promoArr = [];

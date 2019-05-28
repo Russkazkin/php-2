@@ -7,8 +7,8 @@ $promo1 = new Promotion('Акция', 'Только в июне: новая ак
 $promo2 = new Promotion('Ежегодная акция', 'Описание ежегодной акции');
 var_dump($promo1);
 var_dump($promo2);
-$promo2->getPromotionRender();
-print_r($promo2->getPromotionArr());
+$promo1->getPromotionRender();
+print_r($promo1->getPromotionArr());
 
 $sale = new Sale(20, 'Сад и огород','Распродажа века');
 $sale->getPromotionRender();
