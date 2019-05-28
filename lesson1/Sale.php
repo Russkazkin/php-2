@@ -1,41 +1,46 @@
 <?php
 
 
+/**
+ * Class Sale
+ * Класс-наследник базового класса Promotion. Добавлен функционал скидок
+ */
 class Sale extends Promotion
 {
     private $discount;
     private $category;
 
 
+    /**
+     * Sale constructor.
+     * @param int $discount Размер скидки
+     * @param string $category Категория товара со скидкой
+     * @param string $title
+     * @param string|null $description
+     * @param string|null $dateStart
+     * @param string|null $dateEnd
+     */
     public function __construct(int $discount, string $category, string $title, string $description = null, string $dateStart = null, string $dateEnd = null)
     {
         $this->discount = $discount;
         $this->category = $category;
-        parent::__construct($title, $description, $dateStart, $dateEnd);
+        parent::__construct($title, $dateStart, $dateEnd);
+        $this->description = $description ?? "Скидка {$this->discount}% на категорию {$this->category}";
     }
 
-    public function getPromotionInfo(bool $html = false)
+    public function getPromotionArr(): array
     {
-        $render = '<h3>' . $this->title . '</h3>' .
-            '<p>Время проведения с ' . $this->dateStart . ' по ' . $this->dateEnd . '</p>';
-        if ($this->description) {
-            $render .= '<p>'. $this->description  .'</p>';
-        }else{
-            $render .= '<p>Скидка '. $this->discount  . '% на категорию '. $this->category .'</p>';
-        }
-        $promoArr = [];
-        $promoArr['dateStart'] = $this->dateStart;
-        $promoArr['dateEnd'] = $this->dateEnd;
-        $promoArr['title'] = $this->title;
-        $promoArr['description'] = $this->description;
-
-        if ($html){
-            echo $render;
-            return null;
-        }else{
-            return $promoArr;
-        }
+        $promoArr = parent::getPromotionArr();
+        $promoArr['discount'] = $this->discount;
+        $promoArr['category'] = $this->category;
+        return $promoArr;
     }
+
+
+    /**
+     * @param int $priceValue
+     * @return int
+     */
     public function priceDiscount(int $priceValue) : int
     {
         return $priceValue - $priceValue * $this->discount / 100;

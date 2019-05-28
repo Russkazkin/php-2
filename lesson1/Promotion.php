@@ -1,6 +1,10 @@
 <?php
 
 
+/**
+ * Class Promotion
+ * Базовый класс для акций магазина. Получает название акции, описания, дату начала и конца. Выводит информацию в соответствие со свойствами
+ */
 class Promotion
 {
     protected $dateStart;
@@ -23,23 +27,20 @@ class Promotion
         $this->title = $title;
         $this->description = $description;
     }
-
-    public function getPromotionInfo( bool $html=false)
+    public function getPromotionRender() : void
     {
-        $render = '<h3>' . $this->title . '</h3>' .
+        echo '<h3>' . $this->title . '</h3>' .
             '<p>Время проведения с ' . $this->dateStart . ' по ' . $this->dateEnd . '</p>' .
             '<p>'. $this->description  .'</p>';
+    }
+
+    public function getPromotionArr() : array
+    {
         $promoArr = [];
         $promoArr['dateStart'] = $this->dateStart;
         $promoArr['dateEnd'] = $this->dateEnd;
         $promoArr['title'] = $this->title;
         $promoArr['description'] = $this->description;
-
-        if ($html){
-            echo $render;
-            return null;
-        }else{
-            return $promoArr;
-        }
+        return $promoArr;
     }
 }
