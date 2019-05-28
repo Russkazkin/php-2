@@ -1,5 +1,7 @@
 <?php
 
+echo '<h3>Задания 1, 2, 3, 4</h3><br>';
+
 require_once 'Promotion.php';
 require_once 'Sale.php';
 
