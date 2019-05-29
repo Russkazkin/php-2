@@ -19,3 +19,7 @@ echo "Цена со скидкой: {$sale->priceDiscount(200)}<br>";
 echo "Цена со скидкой: {$sale->priceDiscount(1500)}<br>";
 
 print_r($sale->getPromotionArr());
+
+$sale1 = new Sale(10, 'Газонокосилки', 'Весенняя распродажа', 'Последняя возможность купить косилки', '10-05-2019', '31-05-2019');
+print_r($sale1->getPromotionArr());
+var_dump($sale1);
