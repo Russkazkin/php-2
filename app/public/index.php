@@ -8,3 +8,5 @@ spl_autoload_register([new Autoload(), 'loadClass']);
 
 $test = new model\Product();
 $test->test();
+
+// $test2 = new model\Price;

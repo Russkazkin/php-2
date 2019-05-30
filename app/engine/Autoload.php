@@ -6,14 +6,13 @@ namespace engine;
 
 class Autoload
 {
-    public function loadClass($className){
-        var_dump($className);
-
-        $fileName = '/../' . str_replace('\\', '/', $className);
-        var_dump($fileName);
-        require $fileName;
+    public function loadClass($className)
+    {
+        $fileName = ROOT_DIR . str_replace('\\', '/', $className) . '.php';
         if (file_exists($fileName)) {
-            require $fileName;
+            require_once $fileName;
+        }else{
+            echo "Файл {$fileName} с классом {$className} не найден!";
         }
     }
 }
