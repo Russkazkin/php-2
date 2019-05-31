@@ -31,7 +31,7 @@ abstract class Model implements IModel
 
     public function getTableName()
     {
-        $class = __CLASS__;
+        $class = get_called_class();
         $table = strtolower(end(explode('\\', $class)));
         return $table;
     }
