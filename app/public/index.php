@@ -6,6 +6,7 @@ use engine\{Autoload, Db};
 use model\{Product, Basket};
 
 spl_autoload_register([new Autoload(), 'loadClass']);
+
 $db = new Db();
 $test = new Product($db);
 
