@@ -25,6 +25,4 @@ abstract class Model implements IModel
         $sql = "SELECT * FROM {$tableName}";
         return $this->db->queryAll($sql);
     }
-
-
 }
