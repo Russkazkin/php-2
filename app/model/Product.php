@@ -2,9 +2,15 @@
 
 namespace model;
 
-class Product
-{
-    public function test(){
-        echo "it works!";
+class Product extends Model {
+    public $id;
+    public $name;
+    public $description;
+    public $price;
+
+
+
+    public function getTableName() {
+        return 'products';
     }
 }

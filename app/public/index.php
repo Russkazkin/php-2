@@ -2,11 +2,11 @@
 
 require "../config/path.php";
 require ENGINE_DIR . "Autoload.php";
-use engine\Autoload;
+use engine\{Autoload, Db};
+use model\Product;
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
-$test = new model\Product();
-$test->test();
+$test = new Product(new Db());
 
-// $test2 = new model\Price;
+var_dump($test instanceof Product);
