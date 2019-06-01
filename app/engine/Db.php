@@ -1,7 +1,7 @@
 <?php
 
 
-namespace engine;
+namespace app\engine;
 
 
 class Db

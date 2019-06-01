@@ -1,14 +1,16 @@
 <?php
 
 
-namespace engine;
+namespace app\engine;
 
 
 class Autoload
 {
     public function loadClass($className)
     {
-        $fileName = ROOT_DIR . str_replace('\\', '/', $className) . '.php';
+        echo $className . "<br>";
+        $fileName = str_replace(['app\\', '\\'],[ROOT_DIR, DS], $className) . '.php';
+        echo $fileName;
         if (file_exists($fileName)) {
             require_once $fileName;
         }else{

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace model;
+namespace app\model;
 
 
 class Basket extends Model
