@@ -13,7 +13,7 @@ class Db
 
     private $config = [
         'driver' => 'mysql',
-        'host' => 'docker_php2_mariadb_1',
+        'host' => 'app_db',
         'login' => 'shop',
         'password' => 'shop',
         'database' => 'shop',
