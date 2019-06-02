@@ -8,6 +8,7 @@ use app\model\{Product, Basket};
 spl_autoload_register([new Autoload(), 'loadClass']);
 
 // phpinfo();
+
 $test = new Product();
 
 $products = $test->getAll();

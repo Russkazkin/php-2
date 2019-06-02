@@ -14,7 +14,9 @@ services:
       - php
 
   php:
-    image: php:7.2-fpm
+    build:
+      ./php
+    image: php2:custom
     container_name:
       app_php
     volumes:

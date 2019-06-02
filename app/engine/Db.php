@@ -5,14 +5,15 @@ namespace app\engine;
 
 use app\traits\TSingleton;
 use \PDO;
+use PDOException;
 
 class Db
 {
     use TSingleton;
 
     private $config = [
-        'driver' => 'sqlite',
-        'host' => 'shop_db',
+        'driver' => 'mysql',
+        'host' => 'docker_php2_mariadb_1',
         'login' => 'shop',
         'password' => 'shop',
         'database' => 'shop',
@@ -23,16 +24,22 @@ class Db
 
 
     public function getConnection() {
-        if (is_null($this->connection)) {
-            var_dump("Подключаюсь к БД, дооолго.");
-            $this->connection = new PDO($this->prepareDsnString(),
-                $this->config['login'],
-                $this->config['password']
-            );
-            $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        }
+        try {
+            if (is_null($this->connection)) {
+                var_dump("Подключаюсь к БД, дооолго.");
+                echo $this->prepareDsnString();
+                $this->connection = new PDO($this->prepareDsnString(),
+                    $this->config['login'],
+                    $this->config['password']
+                );
+                $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            }
 
-        return $this->connection;
+            return $this->connection;
+        }catch (PDOException $e) {
+            print "Error!: " . $e->getMessage() . "<br/>";
+            die();
+        }
     }
 
     private function prepareDsnString() {
@@ -43,9 +50,8 @@ class Db
             $this->config['charset']
         );
     }
-// SELECT * FROM products WHERE id = :id, ['id' => 1]
+
     private function query($sql, $param) {
-        print_r($this->getConnection());
         $stmt = $this->getConnection()->prepare('SELECT * FROM `product`');
         echo $sql;
         if( ! $stmt ){
