@@ -7,10 +7,8 @@ use app\model\{Product, Basket};
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
-$db = new Db();
-$test = new Product($db);
+// phpinfo();
+$test = new Product();
 
-var_dump($test instanceof Product);
-
-$basket = new Basket($db);
-echo $basket->getTableName();
+$products = $test->getAll();
+var_dump($products);

@@ -4,7 +4,7 @@
 namespace app\traits;
 
 
-class TSingleton
+trait TSingleton
 {
     private static $instance = null;
 
