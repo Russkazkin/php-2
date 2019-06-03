@@ -3,7 +3,7 @@
 require "../config/path.php";
 require ENGINE_DIR . "Autoload.php";
 use app\engine\{Autoload, Db};
-use app\model\{Product, Basket, Manufacturer};
+use app\model\{Product, Basket, Manufacturer, Category};
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
@@ -31,3 +31,6 @@ $man2 = new Manufacturer([
     'description' => 'Лучшие мясные продукты из г. Сочи'
 ]);
 var_dump($man2);
+echo "<div>Категория</div>";
+$cat1 = Category::getObjectFromDb(1);
+var_dump($cat1);

@@ -52,4 +52,24 @@ abstract class Model implements IModel
         $item = $statement->fetch();
         return $item;
     }
+
+    public static function getObjectFromDb($id)
+    {
+        $connection = DB::getInstance()->getConnection();
+        $class = get_called_class();
+        $table = strtolower(end(explode('\\', $class)));
+        $sql = "SELECT * FROM {$table} WHERE id = :id";
+        $stmt = $connection->prepare($sql);
+        if( ! $stmt ){
+            die( "SQL Error: {$this->getConnection()->errorCode()} - {$this->getConnection()->errorInfo()}" );
+        }
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        if( ! $stmt ){
+            die( "SQL Error: {$this->getConnection()->errorCode()} - {$this->getConnection()->errorInfo()}" );
+        }
+        $stmt->setFetchMode( PDO::FETCH_CLASS, $class);
+        $item = $stmt->fetch();
+        return $item;
+    }
 }
