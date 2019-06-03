@@ -3,7 +3,7 @@
 namespace app\model;
 
 class Product extends Model {
-    public $id;
+    /*public $id;
     public $category_id;
     public $manufacturer_id;
     public $name;
@@ -12,8 +12,7 @@ class Product extends Model {
     public $created;
     public $modified;
 
-    public function __construct( $param = null,
-                                 $id = null,
+    public function __construct( $id = null,
                                  $category_id = null,
                                  $manufacturer_id = null,
                                  $name = null,
@@ -22,14 +21,21 @@ class Product extends Model {
                                  $created = null,
                                  $modified = null)
     {
-        parent::__construct();
-        if(is_int($param)){
-            $this->getFromDB($param);
-        }elseif(is_array($param)){
-            echo "Переданы данные для создания объекта<br>";
-        }else{
-            throw new \Exception("При создании объекта необходимо передать id объекта или данные для создания нового в массиве");
-        }
+        parent::__construct($param = null);
+        if(is_array($param)){
+            foreach ($param as $key=>$value) {
+                $this->$key = $value;
+            }
+        }*/
+//        if(is_int($param)){
+//            $this->getFromDB($param);
+//        }elseif(is_array($param)){
+//            echo "Переданы данные для создания объекта<br>";
+//        }
+//        }else{
+//            die();
+//            throw new \Exception("При создании объекта необходимо передать id объекта или данные для создания нового в массиве");
+//        }
 
         /*$this->id = $id;
         $this->category_id = $category_id;
@@ -40,12 +46,12 @@ class Product extends Model {
         $this->created = $created;
         $this->modified = $modified;*/
 
-    }
-    public function getFromDB($id){
+//    }
+    /*public function getFromDB($id){
         $item = $this->getOne($id);
         //var_dump($item);
         foreach ($item as $key=>$value) {
             $this->$key = $value;
         }
-    }
+    }*/
 }

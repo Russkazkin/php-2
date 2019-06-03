@@ -11,9 +11,14 @@ abstract class Model implements IModel
 {
     protected $db;
 
-    public function __construct()
+    public function __construct($param = null)
     {
         $this->db = Db::getInstance();
+        if(is_array($param)){
+            foreach ($param as $key=>$value) {
+                $this->$key = $value;
+            }
+        }
     }
 
     public function getOne($id)
