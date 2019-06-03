@@ -25,7 +25,6 @@ class Product extends Model {
         parent::__construct();
         if(is_int($param)){
             $this->getFromDB($param);
-
         }elseif(is_array($param)){
             echo "Переданы данные для создания объекта<br>";
         }else{

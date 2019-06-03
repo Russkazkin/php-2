@@ -37,13 +37,14 @@ abstract class Model implements IModel
         return $table;
     }
 
-    /*public static function getObject($id)
+    public static function getObject($id)
     {
         $connection = DB::getInstance()->getConnection();
-        $statement = $connection->query("SELECT * FROM product WHERE id = {$id}");
         $class = get_called_class();
+        $table = strtolower(end(explode('\\', $class)));
+        $statement = $connection->query("SELECT * FROM {$table} WHERE id = {$id}");
         $statement->setFetchMode( PDO::FETCH_CLASS, $class);
         $item = $statement->fetch();
         return $item;
-    }*/
+    }
 }
