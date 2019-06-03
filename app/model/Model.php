@@ -60,13 +60,10 @@ abstract class Model implements IModel
         $table = strtolower(end(explode('\\', $class)));
         $sql = "SELECT * FROM {$table} WHERE id = :id";
         $stmt = $connection->prepare($sql);
-        if( ! $stmt ){
-            die( "SQL Error: {$this->getConnection()->errorCode()} - {$this->getConnection()->errorInfo()}" );
-        }
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         if( ! $stmt ){
-            die( "SQL Error: {$this->getConnection()->errorCode()} - {$this->getConnection()->errorInfo()}" );
+            die( "SQL Error: {$connection->errorCode()} - {$connection->errorInfo()}" );
         }
         $stmt->setFetchMode( PDO::FETCH_CLASS, $class);
         $item = $stmt->fetch();
