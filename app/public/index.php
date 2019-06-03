@@ -13,5 +13,5 @@ $test = new Product(2);
 
 $products = $test->getAll();
 //var_dump($products);
-$kefir = Product::getObject(2);
+$kefir = new Product(2);
 var_dump($kefir);

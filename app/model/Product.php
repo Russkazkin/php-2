@@ -13,33 +13,40 @@ class Product extends Model {
     public $modified;
 
     public function __construct( $param = null,
-                                 $id,
-                                 $category_id,
-                                 $manufacturer_id,
-                                 $name,
-                                 $description,
-                                 $price,
-                                 $created,
-                                 $modified)
+                                 $id = null,
+                                 $category_id = null,
+                                 $manufacturer_id = null,
+                                 $name = null,
+                                 $description = null,
+                                 $price = null,
+                                 $created = null,
+                                 $modified = null)
     {
         parent::__construct();
-        $this->id = $id;
+        if(is_int($param)){
+            $this->getFromDB($param);
+
+        }elseif(is_array($param)){
+            echo "Переданы данные для создания объекта<br>";
+        }else{
+            throw new \Exception("При создании объекта необходимо передать id объекта или данные для создания нового в массиве");
+        }
+
+        /*$this->id = $id;
         $this->category_id = $category_id;
         $this->manufacturer_id = $manufacturer_id;
         $this->name = $name;
         $this->description = $description;
         $this->price = $price;
         $this->created = $created;
-        $this->modified = $modified;
+        $this->modified = $modified;*/
 
-        /*if(is_int($param)){
-            echo "Передан id <br>";
-
-        }elseif(is_array($param)){
-            echo "Переданы данные для создания объекта<br>";
-        }else{
-            throw new \Exception("При создании объекта необходимо передать id объекта или данные для создания нового в массиве");
-        }*/
-   }
-
+    }
+    public function getFromDB($id){
+        $item = $this->getOne($id);
+        //var_dump($item);
+        foreach ($item as $key=>$value) {
+            $this->$key = $value;
+        }
+    }
 }
