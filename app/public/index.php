@@ -9,7 +9,9 @@ spl_autoload_register([new Autoload(), 'loadClass']);
 
 // phpinfo();
 
-$test = new Product();
+$test = new Product(2);
 
 $products = $test->getAll();
-var_dump($products);
+//var_dump($products);
+$kefir = Product::getObject(2);
+var_dump($kefir);

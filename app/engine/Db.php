@@ -26,8 +26,6 @@ class Db
     public function getConnection() {
         try {
             if (is_null($this->connection)) {
-                var_dump("Подключаюсь к БД, дооолго.");
-                echo $this->prepareDsnString();
                 $this->connection = new PDO($this->prepareDsnString(),
                     $this->config['login'],
                     $this->config['password']
@@ -52,8 +50,7 @@ class Db
     }
 
     private function query($sql, $param) {
-        $stmt = $this->getConnection()->prepare('SELECT * FROM `product`');
-        echo $sql;
+        $stmt = $this->getConnection()->prepare($sql);
         if( ! $stmt ){
             die( "SQL Error: {$this->getConnection()->errorCode()} - {$this->getConnection()->errorInfo()}" );
         }
@@ -61,17 +58,19 @@ class Db
         return $stmt;
     }
 
-    public function execute($sql, $params) {
+    public function execute($sql, $params)
+    {
         $this->query($sql, $params);
         return true;
     }
 
-
-    public function queryOne($sql, $param = []) {
+    public function queryOne($sql, $param = [])
+    {
         return $this->queryAll($sql, $param)[0];
     }
-    public function queryAll($sql, $param = []) {
+
+    public function queryAll($sql, $param = [])
+    {
         return $this->query($sql, $param)->fetchAll();
     }
-
 }
