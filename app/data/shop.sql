@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: db
--- Время создания: Июн 03 2019 г., 17:00
+-- Время создания: Июн 04 2019 г., 13:33
 -- Версия сервера: 10.3.15-MariaDB-1:10.3.15+maria~bionic
 -- Версия PHP: 7.2.14
 
@@ -25,6 +25,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `basket`
+--
+
+CREATE TABLE `basket` (
+  `id` int(11) NOT NULL,
+  `session_id` int(11) NOT NULL,
+  `$product_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `category`
 --
 
@@ -42,7 +56,8 @@ CREATE TABLE `category` (
 
 INSERT INTO `category` (`id`, `name`, `description`, `created`, `modified`) VALUES
 (1, 'Хлебо-булочные изделия', 'Хлеб, выпечка, весовое печенье', '2019-06-03 16:19:34', '2019-06-03 16:19:34'),
-(2, 'Молочные продукты', 'Молоко и кисломолочные напитки', '2019-06-03 16:20:11', '2019-06-03 16:20:11');
+(2, 'Молочные продукты', 'Молоко и кисломолочные напитки', '2019-06-03 16:20:11', '2019-06-03 16:20:11'),
+(3, 'Колбасы', 'Все виды колбас', '2019-06-04 06:13:38', '2019-06-04 06:13:38');
 
 -- --------------------------------------------------------
 
@@ -96,6 +111,12 @@ INSERT INTO `product` (`id`, `category_id`, `manufacturer_id`, `name`, `descript
 --
 
 --
+-- Индексы таблицы `basket`
+--
+ALTER TABLE `basket`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `category`
 --
 ALTER TABLE `category`
@@ -112,34 +133,35 @@ ALTER TABLE `manufacturer`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`),
-  ADD KEY `manufacturer_id` (`manufacturer_id`);
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
+-- AUTO_INCREMENT для таблицы `basket`
+--
+ALTER TABLE `basket`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT для таблицы `manufacturer`
+--
+ALTER TABLE `manufacturer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT для таблицы `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Ограничения внешнего ключа сохраненных таблиц
---
-
---
--- Ограничения внешнего ключа таблицы `product`
---
-ALTER TABLE `product`
-  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`manufacturer_id`) REFERENCES `manufacturer` (`id`);
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
