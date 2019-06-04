@@ -9,7 +9,7 @@ spl_autoload_register([new Autoload(), 'loadClass']);
 
 // phpinfo();
 
-echo "<div>Товары</div>";
+echo "<h3>Product</h3>";
 
 /*$product1 = new Product(2);
 var_dump($product1);*/
@@ -23,14 +23,15 @@ $product3 = new Product([
     'price' => 20.00,
 ]);
 var_dump($product3);
-echo "<div>Производители</div>";
+echo "<h3>Manufacturer</h3>";
 $man1 = Manufacturer::getObject(1);
 var_dump($man1);
 $man2 = new Manufacturer([
     'name' => 'Сочинский Мясокомбинат',
     'description' => 'Лучшие мясные продукты из г. Сочи'
 ]);
+$man2->insert();
 var_dump($man2);
-echo "<div>Категория</div>";
-$cat1 = Category::getObjectFromDb(1);
+echo "<h3>Category</h3>";
+$cat1 = Category::getObject(1);
 var_dump($cat1);

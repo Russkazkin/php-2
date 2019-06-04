@@ -47,17 +47,6 @@ abstract class Model implements IModel
         $connection = DB::getInstance()->getConnection();
         $class = get_called_class();
         $table = strtolower(end(explode('\\', $class)));
-        $statement = $connection->query("SELECT * FROM {$table} WHERE id = {$id}");
-        $statement->setFetchMode( PDO::FETCH_CLASS, $class);
-        $item = $statement->fetch();
-        return $item;
-    }
-
-    public static function getObjectFromDb($id)
-    {
-        $connection = DB::getInstance()->getConnection();
-        $class = get_called_class();
-        $table = strtolower(end(explode('\\', $class)));
         $sql = "SELECT * FROM {$table} WHERE id = :id";
         $stmt = $connection->prepare($sql);
         $stmt->bindParam(':id', $id);
@@ -68,5 +57,31 @@ abstract class Model implements IModel
         $stmt->setFetchMode( PDO::FETCH_CLASS, $class);
         $item = $stmt->fetch();
         return $item;
+    }
+
+    public function insert()
+    {
+        $tableName = $this->getTableName();
+        $cols = '';
+        $binds = '';
+        $arr = [];
+        foreach ($this as $key => $value) {
+            if($key != 'db'){
+                $cols .= "{$key}, ";
+                $binds .= ":{$key}, ";
+                $arr[$key] = $value;
+            }
+        }
+        $cols = substr($cols, 0, -2);
+        $binds = substr($binds, 0, -2);
+        $sql = "INSERT INTO {$tableName} ({$cols}) VALUES ({$binds})";
+
+        $connection = $this->db->getConnection();
+        $stmt = $connection->prepare($sql);
+        $res = $stmt->execute($arr);
+        if(!$res){
+            die( var_dump($stmt->errorInfo() ));
+        }
+        echo "Запись успешно добавлена в теблицу {$tableName} базы данных";
     }
 }

@@ -3,7 +3,7 @@
 namespace app\model;
 
 class Product extends Model {
-    /*public $id;
+    public $id;
     public $category_id;
     public $manufacturer_id;
     public $name;
@@ -12,7 +12,7 @@ class Product extends Model {
     public $created;
     public $modified;
 
-    public function __construct( $id = null,
+    /*public function __construct( $id = null,
                                  $category_id = null,
                                  $manufacturer_id = null,
                                  $name = null,
