@@ -65,6 +65,7 @@ abstract class Model implements IModel
         $cols = '';
         $binds = '';
         $arr = [];
+
         foreach ($this as $key => $value) {
             if($key != 'db'){
                 $cols .= "{$key}, ";
@@ -72,6 +73,7 @@ abstract class Model implements IModel
                 $arr[$key] = $value;
             }
         }
+
         $cols = substr($cols, 0, -2);
         $binds = substr($binds, 0, -2);
         $sql = "INSERT INTO {$tableName} ({$cols}) VALUES ({$binds})";
