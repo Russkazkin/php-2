@@ -79,9 +79,10 @@ abstract class Model implements IModel
         $connection = $this->db->getConnection();
         $stmt = $connection->prepare($sql);
         $res = $stmt->execute($arr);
+        $this->id = $connection->lastInsertId();
         if(!$res){
             die( var_dump($stmt->errorInfo() ));
         }
-        echo "Запись успешно добавлена в теблицу {$tableName} базы данных";
+        echo "<p>Запись успешно добавлена в таблицу {$tableName} базы данных. ID: {$this->id}</p>";
     }
 }
