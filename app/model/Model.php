@@ -85,4 +85,13 @@ abstract class Model implements IModel
         }
         echo "<p>Запись успешно добавлена в таблицу {$tableName} базы данных. ID: {$this->id}</p>";
     }
+
+    public function delete()
+    {
+        //DELETE FROM `manufacturer` WHERE `manufacturer`.`id` = 7;
+        $tableName = $this->getTableName();
+        $sql = "DELETE FROM {$tableName} WHERE id = :id";
+        $this->db->execute($sql, ['id' => $this->id]);
+        echo "<p>Удалена запись с ID: {$this->id} из таблицы {$tableName}</p>";
+    }
 }
