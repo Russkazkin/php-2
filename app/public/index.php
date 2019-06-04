@@ -23,7 +23,7 @@ $product3 = new Product([
     'price' => 20.00,
 ]);
 $product3->insert();
-$product3->delete();
+
 var_dump($product3);
 echo "<h3>Manufacturer</h3>";
 $man1 = Manufacturer::getObject(1);
@@ -37,3 +37,5 @@ $man2->delete();
 echo "<h3>Category</h3>";
 $cat1 = Category::getObject(1);
 var_dump($cat1);
+
+$product3->delete();

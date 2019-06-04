@@ -76,19 +76,14 @@ abstract class Model implements IModel
         $binds = substr($binds, 0, -2);
         $sql = "INSERT INTO {$tableName} ({$cols}) VALUES ({$binds})";
 
-        $connection = $this->db->getConnection();
-        $stmt = $connection->prepare($sql);
-        $res = $stmt->execute($arr);
-        $this->id = $connection->lastInsertId();
-        if(!$res){
-            die( var_dump($stmt->errorInfo() ));
-        }
+        $this->db->execute($sql, $arr);
+        $this->id = $this->db->getConnection()->lastInsertId();
+
         echo "<p>Запись успешно добавлена в таблицу {$tableName} базы данных. ID: {$this->id}</p>";
     }
 
     public function delete()
     {
-        //DELETE FROM `manufacturer` WHERE `manufacturer`.`id` = 7;
         $tableName = $this->getTableName();
         $sql = "DELETE FROM {$tableName} WHERE id = :id";
         $this->db->execute($sql, ['id' => $this->id]);
