@@ -13,22 +13,21 @@ switch ($page) {
     case 'index';
     case '':
         $page = 'home';
+        $title = 'Главная';
         $params = [
-            'title' => 'Home',
+
         ];
         break;
 }
 
 
+echo render($page, $title, $params, $ajax);
 
-// phpinfo();
-
-echo render($page, $params, $ajax);
-
-function render($page, $params = [], $ajax = false)
+function render($page, $title, $params = [], $ajax = false)
 {
     if (!$ajax) {
-        $content = renderTemplate(LAYOUTS_DIR . 'main', ['content' => renderTemplate($page, $params)]);
+        $content = renderTemplate(LAYOUTS_DIR . 'main', ['content' => renderTemplate($page, $params),
+                                                                'title' => $title]);
     } else {
         $content = json_encode($params, JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
     }
@@ -38,15 +37,10 @@ function render($page, $params = [], $ajax = false)
 function renderTemplate($page, $params = [])
 {
     ob_start();
-    // var_dump($params);
     if (!is_null($params)) {
         extract($params);
     }
-    // var_dump($params);
     $fileName = TEMPLATES_DIR . $page . ".php";
-    // echo $page;
-    // echo $fileName;
-    // echo TEMPLATES_DIR;
     if (file_exists($fileName)) {
         include $fileName;
     } else {
@@ -54,35 +48,3 @@ function renderTemplate($page, $params = [])
     }
     return ob_get_clean();
 }
-
-
-echo "<h3>Product</h3>";
-
-/*$product1 = new Product(2);
-var_dump($product1);*/
-$product2 = Product::getObject(1);
-var_dump($product2);
-$product3 = new Product([
-    'category_id' => 2,
-    'manufacturer_id' => 2,
-    'name' => 'Хлеб "Бородинский"',
-    'description' => 'Хлеб белый, 1 сорт',
-    'price' => 20.00,
-]);
-$product3->insert();
-
-var_dump($product3);
-echo "<h3>Manufacturer</h3>";
-$man1 = Manufacturer::getObject(1);
-var_dump($man1);
-$man2 = new Manufacturer([
-    'name' => 'Сочинский Мясокомбинат',
-    'description' => 'Лучшие мясные продукты из г. Сочи'
-]);
-$man2->insert();
-$man2->delete();
-echo "<h3>Category</h3>";
-$cat1 = Category::getObject(1);
-var_dump($cat1);
-
-$product3->delete();
