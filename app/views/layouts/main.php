@@ -54,7 +54,7 @@
         </div>
     </main>
 </div>
-<footer class="footer">
+<footer class="footer text-light bg-dark">
 
 </footer>
 
