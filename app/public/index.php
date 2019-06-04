@@ -15,8 +15,12 @@ switch ($page) {
         $page = 'home';
         $title = 'Главная';
         $params = [
-
+            'heading' => 'Главная страница',
         ];
+        break;
+    case 'debug':
+        $page = 'debug';
+        $title = 'Тестирование функционала';
         break;
 }
 
