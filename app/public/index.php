@@ -2,8 +2,8 @@
 
 require "../config/path.php";
 require ENGINE_DIR . "Autoload.php";
-use app\engine\{Autoload, Db};
-use app\model\{Product, Basket, Manufacturer, Category};
+
+use app\engine\Autoload;
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
