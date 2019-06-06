@@ -4,15 +4,12 @@ namespace app\model;
 
 class Product extends DbModel
 {
-    public $id;
-    public $category_id;
-    public $manufacturer_id;
-    public $name;
-    public $description;
-    public $price;
-    public $img;
-    public $created;
-    public $modified;
+    protected $category_id;
+    protected $manufacturer_id;
+    protected $name;
+    protected $description;
+    protected $price;
+    protected $img;
 
     public function __construct($category_id = null,
                                 $manufacturer_id = null,
@@ -27,5 +24,10 @@ class Product extends DbModel
         $this->description = $description;
         $this->price = $price;
         $this->img = $img;
+
+        foreach ($this as $key => $value) {
+            $this->updateFlags[$key] = false;
+        }
     }
+
 }

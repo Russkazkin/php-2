@@ -8,6 +8,20 @@ use app\engine\Db;
 
 abstract class DbModel
 {
+
+    public $updateFlags = [];
+
+    public function getProp($prop)
+    {
+        return $this->$prop;
+    }
+
+    public function setProp($prop, $value)
+    {
+        $this->updateFlags[$prop] = true;
+        $this->$prop = $value;
+    }
+
     public static function getOne($id)
     {
         $tableName = static::getTableName();
@@ -34,12 +48,13 @@ abstract class DbModel
         $cols = '';
         $binds = '';
         $arr = [];
-
-        foreach ($this as $key => $value) {
-            if ($key == "id" || $key == "created" || $key == "modified") continue;
+        var_dump($this->updateFlags);
+        foreach ($this->updateFlags as $key => $value) {
+            if ($key == "updateFlags") continue;
+            echo $key . '<br>';
             $cols .= "{$key}, ";
             $binds .= ":{$key}, ";
-            $arr[$key] = $value;
+            $arr[$key] = $this->getProp($key);
         }
 
         $cols = substr($cols, 0, -2);

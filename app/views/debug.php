@@ -6,17 +6,22 @@ use app\model\Product;
 
 echo "<h3>Product</h3>";
 
-$product1 = new Product(2, 1, 'Молоко топленое, полиэтиленовый пакет', 'Жирность 1.5%', 55);
+//$product1 = new Product(2, 1, 'Молоко топленое, полиэтиленовый пакет', 'Жирность 1.5%', 55);
 
 /**
- * @var Product $product2
+ * @var Product $product1
  */
 
-$product1->save();
+$product1 = Product::getOne(101);
+
 var_dump($product1);
 
-$product2 = Product::getOne(101);
-var_dump($product2);
+$product1->setProp('price', 54.90);
+
+var_dump($product1);
+
+//$product2 = Product::getOne(101);
+//var_dump($product2);
 
 /*echo "<h3>Manufacturer</h3>";
 $man1 = Manufacturer::getObject(1);
