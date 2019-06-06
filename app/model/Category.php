@@ -4,7 +4,7 @@
 namespace app\model;
 
 
-class Category extends Model
+class Category extends DbModel
 {
 
 }

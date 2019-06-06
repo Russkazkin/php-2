@@ -3,7 +3,7 @@
 
 namespace app\model;
 
-class User extends Model
+class User extends DbModel
 {
     public $id;
     public $login;

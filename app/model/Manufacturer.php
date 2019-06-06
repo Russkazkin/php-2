@@ -4,7 +4,7 @@
 namespace app\model;
 
 
-class Manufacturer extends Model
+class Manufacturer extends DbModel
 {
 
 }

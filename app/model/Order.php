@@ -4,7 +4,7 @@
 namespace app\model;
 
 
-class Order extends Model
+class Order extends DbModel
 {
 
 }
