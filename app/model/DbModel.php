@@ -4,63 +4,31 @@
 namespace app\model;
 
 use app\engine\Db;
-use \PDO;
+
 
 abstract class DbModel
 {
-    protected $db;
-
-    public function __construct($param = null)
-    {
-        $this->db = Db::getInstance();
-        if(is_array($param)){
-            foreach ($param as $key=>$value) {
-                $this->$key = $value;
-            }
-        }
-    }
-
-    public function getOne($id)
-    {
-        $tableName = $this->getTableName();
+    public static function getOne($id) {
+        $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
-        return $this->db->queryOne($sql, ['id' => $id]);
+        return Db::getInstance()->queryObject($sql, ['id' => $id], static::class);
     }
-
-    public function getAll()
-    {
-        $tableName = $this->getTableName();
+    public static function getAll() {
+        $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName}";
-        return $this->db->queryAll($sql);
+        return Db::getInstance()->queryAll($sql);
     }
 
-    public function getTableName()
+    public static function getTableName()
     {
         $class = get_called_class();
         $table = strtolower(end(explode('\\', $class)));
         return $table;
     }
 
-    public static function getObject($id)
-    {
-        $connection = DB::getInstance()->getConnection();
-        $class = get_called_class();
-        $table = strtolower(end(explode('\\', $class)));
-        $sql = "SELECT * FROM {$table} WHERE id = :id";
-        $stmt = $connection->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        if( ! $stmt ){
-            die( "SQL Error: {$connection->errorCode()} - {$connection->errorInfo()}" );
-        }
-        $stmt->setFetchMode( PDO::FETCH_CLASS, $class);
-        $item = $stmt->fetch();
-        return $item;
-    }
-
     public function insert()
     {
-        $tableName = $this->getTableName();
+        $tableName = static::getTableName();
         $cols = '';
         $binds = '';
         $arr = [];
@@ -77,17 +45,17 @@ abstract class DbModel
         $binds = substr($binds, 0, -2);
         $sql = "INSERT INTO {$tableName} ({$cols}) VALUES ({$binds})";
 
-        $this->db->execute($sql, $arr);
-        $this->id = $this->db->getConnection()->lastInsertId();
+        Db::getInstance()->execute($sql, $arr);
+        $this->id = Db::getInstance()->lastInsertId();
 
         echo "<p>Запись успешно добавлена в таблицу {$tableName} базы данных. ID: {$this->id}</p>";
     }
 
     public function delete()
     {
-        $tableName = $this->getTableName();
+        $tableName = static::getTableName();
         $sql = "DELETE FROM {$tableName} WHERE id = :id";
-        $this->db->execute($sql, ['id' => $this->id]);
+        Db::getInstance()->execute($sql, ['id' => $this->id]);
         echo "<p>Удалена запись с ID: {$this->id} из таблицы {$tableName}</p>";
     }
 }
