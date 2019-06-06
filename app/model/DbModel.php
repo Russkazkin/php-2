@@ -8,12 +8,14 @@ use app\engine\Db;
 
 abstract class DbModel
 {
-    public static function getOne($id) {
+    public static function getOne($id)
+    {
         $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
         return Db::getInstance()->queryObject($sql, ['id' => $id], static::class);
     }
-    public static function getAll() {
+    public static function getAll()
+    {
         $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName}";
         return Db::getInstance()->queryAll($sql);

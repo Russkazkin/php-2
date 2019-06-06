@@ -6,26 +6,19 @@ use app\model\Product;
 
 echo "<h3>Product</h3>";
 
-// $product1 = new Product(2, 1, 'Сметана, полиэтиленовый пакет', 'Жирность 15%', 35, 'smetana.png');
+$product1 = new Product(2, 1, 'Молоко топленое, полиэтиленовый пакет', 'Жирность 1.5%', 55);
 
 /**
  * @var Product $product2
  */
-$product2 = Product::getOne(97);
 
-/*$product2 = Product::getObject(1);
+$product1->save();
+var_dump($product1);
+
+$product2 = Product::getOne(101);
 var_dump($product2);
-$product3 = new Product([
-    'category_id' => 2,
-    'manufacturer_id' => 2,
-    'name' => 'Хлеб "Бородинский"',
-    'description' => 'Хлеб белый, 1 сорт',
-    'price' => 20.00,
-]);
-$product3->insert();
 
-var_dump($product3);
-echo "<h3>Manufacturer</h3>";
+/*echo "<h3>Manufacturer</h3>";
 $man1 = Manufacturer::getObject(1);
 var_dump($man1);
 $man2 = new Manufacturer([
