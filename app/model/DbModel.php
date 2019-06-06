@@ -34,16 +34,18 @@ abstract class DbModel
         $arr = [];
 
         foreach ($this as $key => $value) {
-            if($key != 'db'){
-                $cols .= "{$key}, ";
-                $binds .= ":{$key}, ";
-                $arr[$key] = $value;
-            }
+            if ($key == "id" || $key == "created" || $key == "modified") continue;
+            $cols .= "{$key}, ";
+            $binds .= ":{$key}, ";
+            $arr[$key] = $value;
         }
 
         $cols = substr($cols, 0, -2);
         $binds = substr($binds, 0, -2);
         $sql = "INSERT INTO {$tableName} ({$cols}) VALUES ({$binds})";
+
+        print $sql;
+        print_r($arr);
 
         Db::getInstance()->execute($sql, $arr);
         $this->id = Db::getInstance()->lastInsertId();
@@ -57,5 +59,13 @@ abstract class DbModel
         $sql = "DELETE FROM {$tableName} WHERE id = :id";
         Db::getInstance()->execute($sql, ['id' => $this->id]);
         echo "<p>Удалена запись с ID: {$this->id} из таблицы {$tableName}</p>";
+    }
+
+    public function save()
+    {
+        if (is_null($this->id))
+            $this->insert();
+        else
+            $this->update();
     }
 }

@@ -6,7 +6,13 @@ use app\model\Product;
 
 echo "<h3>Product</h3>";
 
-$product2 = Product::getObject(1);
+$product1 = new Product(2, 1, 'Сметана, полиэтиленовый пакет', 'Жирность 15%', 35, 'smetana.png');
+
+var_dump($product1);
+
+$product1->save();
+
+/*$product2 = Product::getObject(1);
 var_dump($product2);
 $product3 = new Product([
     'category_id' => 2,
@@ -31,4 +37,4 @@ echo "<h3>Category</h3>";
 $cat1 = Category::getObject(1);
 var_dump($cat1);
 
-$product3->delete();
+$product3->delete();*/
