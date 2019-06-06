@@ -14,9 +14,10 @@ echo "<h3>Product</h3>";
 
 $product1 = Product::getOne(101);
 
-var_dump($product1);
 
-$product1->setProp('price', 54.90);
+$product1->setProp('price', 58.90);
+$product1->setProp('description', 'Жирность 3.5%');
+var_dump($product1->save());
 
 var_dump($product1);
 

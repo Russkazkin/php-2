@@ -4,6 +4,7 @@
 namespace app\model;
 
 use app\engine\Db;
+use \Exception;
 
 
 abstract class DbModel
@@ -18,8 +19,13 @@ abstract class DbModel
 
     public function setProp($prop, $value)
     {
-        $this->updateFlags[$prop] = true;
-        $this->$prop = $value;
+        if(isset($this->$prop)) {
+            $this->updateFlags[$prop] = true;
+            $this->$prop = $value;
+        }else{
+            throw new Exception('Cвойство не найдено');
+        }
+
     }
 
     public static function getOne($id)
@@ -48,7 +54,7 @@ abstract class DbModel
         $cols = '';
         $binds = '';
         $arr = [];
-        var_dump($this->updateFlags);
+
         foreach ($this->updateFlags as $key => $value) {
             if ($key == "updateFlags") continue;
             echo $key . '<br>';
@@ -68,6 +74,7 @@ abstract class DbModel
         $this->id = Db::getInstance()->lastInsertId();
 
         echo "<p>Запись успешно добавлена в таблицу {$tableName} базы данных. ID: {$this->id}</p>";
+        return true;
     }
 
     public function delete()
@@ -77,12 +84,31 @@ abstract class DbModel
         Db::getInstance()->execute($sql, ['id' => $this->id]);
         echo "<p>Удалена запись с ID: {$this->id} из таблицы {$tableName}</p>";
     }
+    public function update()
+    {
+        $tableName = static::getTableName();
+        $updateArr = [];
+        $values = [];
+        foreach ($this->updateFlags as $key => $value){
+            if($value){
+                $updateArr[] = "`{$key}` = :{$key}";
+                $values[$key] = $this->getProp($key);
+            }
+        }
+        var_dump($updateArr);
+        if(!$updateArr) return false;
+        $updates = implode(", ", $updateArr);
+        $values['id'] = $this->getProp('id');
+        $sql = "UPDATE `{$tableName}` SET {$updates} WHERE `id` = :id";
+        Db::getInstance()->execute($sql, $values);
+        return true;
+    }
 
     public function save()
     {
         if (is_null($this->id))
-            $this->insert();
+            return $this->insert();
         else
-            $this->update();
+            return $this->update();
     }
 }
