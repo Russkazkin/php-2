@@ -6,11 +6,12 @@ use app\model\Product;
 
 echo "<h3>Product</h3>";
 
-$product1 = new Product(2, 1, 'Сметана, полиэтиленовый пакет', 'Жирность 15%', 35, 'smetana.png');
+// $product1 = new Product(2, 1, 'Сметана, полиэтиленовый пакет', 'Жирность 15%', 35, 'smetana.png');
 
-var_dump($product1);
-
-$product1->save();
+/**
+ * @var Product $product2
+ */
+$product2 = Product::getOne(97);
 
 /*$product2 = Product::getObject(1);
 var_dump($product2);

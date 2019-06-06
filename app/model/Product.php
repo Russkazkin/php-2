@@ -19,7 +19,7 @@ class Product extends DbModel
                                 $name = null,
                                 $description = null,
                                 $price = null,
-                                $img = null)
+                                $img = 'placeholder.png')
     {
         $this->category_id = $category_id;
         $this->manufacturer_id = $manufacturer_id;
