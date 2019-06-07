@@ -1,6 +1,8 @@
 <?php
 /**
  * @var \app\models\Product $products
+ * @var \app\controllers\ProductController $title
+ * @var \app\controllers\ProductController $heading
  */
 $this->title = $title;
 ?>
