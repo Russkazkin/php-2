@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\model;
+namespace app\models;
 
 
 use app\interfaces\IModel;

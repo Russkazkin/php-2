@@ -1,8 +1,8 @@
 <?php
 
-use app\model\Category;
-use app\model\Manufacturer;
-use app\model\Product;
+use app\models\Category;
+use app\models\Manufacturer;
+use app\models\Product;
 
 echo "<h3>Product</h3>";
 
