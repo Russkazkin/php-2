@@ -4,6 +4,8 @@ use app\models\Category;
 use app\models\Manufacturer;
 use app\models\Product;
 
+$this->title = "Страница отладки";
+
 echo "<h3>Product</h3>";
 
 //$product1 = new Product(2, 1, 'Молоко топленое, полиэтиленовый пакет', 'Жирность 1.5%', 55);
