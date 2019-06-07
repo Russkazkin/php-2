@@ -15,13 +15,17 @@ spl_autoload_register([new Autoload(), 'loadClass']);
 $routeArr = explode('/', $_SERVER['REQUEST_URI']);
 $controllerName = $routeArr[1] ?: 'site';
 $actionName = $routeArr[2];
+$values = array_slice($routeArr, 3);
+
 
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
 if (class_exists($controllerClass)) {
     $controller = new $controllerClass();
+    $controller->values = $values;
     $controller->runAction($actionName);
 } else {
     $controller = new SiteController();
+    $controller->values = $values;
     $controller->runAction($controllerName);
 }
 /*switch ($page) {

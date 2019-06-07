@@ -10,6 +10,7 @@ class Controller
     private $defaultAction = 'index';
     private $layout = 'main';
     private $useLayout = true;
+    public $values = [];
 
     public function runAction($action = null)
     {
