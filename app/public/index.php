@@ -3,7 +3,7 @@
 require "../config/path.php";
 require ENGINE_DIR . "Autoload.php";
 
-use app\engine\Autoload;
+use app\engine\{Autoload, Render};
 use app\controllers\{Controller, SiteController};
 
 /**
@@ -20,55 +20,11 @@ $values = array_slice($routeArr, 3);
 
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
 if (class_exists($controllerClass)) {
-    $controller = new $controllerClass();
+    $controller = new $controllerClass(new Render());
     $controller->values = $values;
     $controller->runAction($actionName);
 } else {
-    $controller = new SiteController();
+    $controller = new SiteController(new Render());
     $controller->values = $values;
     $controller->runAction($controllerName);
 }
-/*switch ($page) {
-    case 'index.php';
-    case 'index';
-    case '':
-        $page = 'home';
-        $title = 'Главная';
-        $params = [
-            'heading' => 'Главная страница',
-        ];
-        break;
-    case 'debug':
-        $page = 'debug';
-        $title = 'Тестирование функционала';
-        break;
-}
-
-
-echo render($page, $title, $params, $ajax);
-
-function render($page, $title, $params = [], $ajax = false)
-{
-    if (!$ajax) {
-        $content = renderTemplate(LAYOUTS_DIR . 'main', ['content' => renderTemplate($page, $params),
-                                                                'title' => $title]);
-    } else {
-        $content = json_encode($params, JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
-    }
-    return $content;
-}
-
-function renderTemplate($page, $params = [])
-{
-    ob_start();
-    if (!is_null($params)) {
-        extract($params);
-    }
-    $fileName = TEMPLATES_DIR . $page . ".php";
-    if (file_exists($fileName)) {
-        include $fileName;
-    } else {
-        Die("Такой страницы не существует. 404");
-    }
-    return ob_get_clean();
-}*/
