@@ -1,3 +1,4 @@
 .idea/
 docker_php2/mariadb/
 .DS_Store
+app/vendor/

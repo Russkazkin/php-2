@@ -20,6 +20,10 @@ class Db
         'charset' => 'utf8'
     ];
 
+
+    /**
+     * @var PDO $connection
+     */
     private $connection = null;
 
 
@@ -64,6 +68,13 @@ class Db
         return true;
     }
 
+    public function queryObject($sql, $params, $class)
+    {
+        $stmt = $this->query($sql, $params);
+        $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
+        return $stmt->fetch();
+    }
+
     public function queryOne($sql, $param = [])
     {
         return $this->queryAll($sql, $param)[0];
@@ -72,5 +83,10 @@ class Db
     public function queryAll($sql, $param = [])
     {
         return $this->query($sql, $param)->fetchAll();
+    }
+
+    public function lastInsertId()
+    {
+        return $this->connection->lastInsertId();
     }
 }

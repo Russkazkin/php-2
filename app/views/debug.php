@@ -1,24 +1,32 @@
 <?php
 
-use app\model\Category;
-use app\model\Manufacturer;
-use app\model\Product;
+use app\models\Category;
+use app\models\Manufacturer;
+use app\models\Product;
+
+$this->title = "Страница отладки";
 
 echo "<h3>Product</h3>";
 
-$product2 = Product::getObject(1);
-var_dump($product2);
-$product3 = new Product([
-    'category_id' => 2,
-    'manufacturer_id' => 2,
-    'name' => 'Хлеб "Бородинский"',
-    'description' => 'Хлеб белый, 1 сорт',
-    'price' => 20.00,
-]);
-$product3->insert();
+//$product1 = new Product(2, 1, 'Молоко топленое, полиэтиленовый пакет', 'Жирность 1.5%', 55);
 
-var_dump($product3);
-echo "<h3>Manufacturer</h3>";
+/**
+ * @var Product $product1
+ */
+
+$product1 = Product::getOne(101);
+
+
+$product1->setProp('price', 58.90);
+$product1->setProp('description', 'Жирность 3.5%');
+var_dump($product1->save());
+
+var_dump($product1);
+
+//$product2 = Product::getOne(101);
+//var_dump($product2);
+
+/*echo "<h3>Manufacturer</h3>";
 $man1 = Manufacturer::getObject(1);
 var_dump($man1);
 $man2 = new Manufacturer([
@@ -31,4 +39,4 @@ echo "<h3>Category</h3>";
 $cat1 = Category::getObject(1);
 var_dump($cat1);
 
-$product3->delete();
+$product3->delete();*/

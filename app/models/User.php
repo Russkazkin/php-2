@@ -1,9 +1,9 @@
 <?php
 
 
-namespace app\model;
+namespace app\models;
 
-class User extends Model
+class User extends DbModel
 {
     public $id;
     public $login;

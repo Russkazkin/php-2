@@ -9,3 +9,4 @@ define("VENDOR_DIR", ROOT_DIR . "vendor/");
 define("TEMPLATES_DIR", ROOT_DIR . "views/");
 define("LAYOUTS_DIR", "./layouts/");
 define('DS', DIRECTORY_SEPARATOR);
+define("CONTROLLER_NAMESPACE", "app\\controllers\\");
