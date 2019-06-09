@@ -13,6 +13,7 @@ abstract class Controller
     private $layout = 'main';
     private $useLayout = true;
     public $values = [];
+    public $title = 'Undefined title';
     private $renderer;
 
     /**
@@ -39,7 +40,10 @@ abstract class Controller
         if ($this->useLayout) {
             return $this->renderTemplate(
                 "layouts/{$this->layout}",
-                ['content' => $this->renderTemplate($template, $params)]
+                [
+                    'content' => $this->renderTemplate($template, $params),
+                    'title' => $this->title,
+                ]
             );
         } else {
             return $this->renderTemplate($template, $params);
