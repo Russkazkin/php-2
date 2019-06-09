@@ -16,6 +16,8 @@ class TwigRender implements IRender
             //'cache' => TWIG_TMPLS . 'compilation_cache',
         ]);
         $template .= '.twig';
+        ob_start();
         echo $twig->render($template, $params);
+        return ob_get_clean();
     }
 }
