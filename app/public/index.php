@@ -3,13 +3,14 @@
 require "../config/path.php";
 require ENGINE_DIR . "Autoload.php";
 
-use app\engine\{Autoload, Render};
+use app\engine\{Autoload, Render, TwigRender};
 use app\controllers\{Controller, SiteController};
 
 /**
  * @var Controller $controller
  */
 
+require_once VENDOR_DIR . 'autoload.php';
 spl_autoload_register([new Autoload(), 'loadClass']);
 
 $routeArr = explode('/', $_SERVER['REQUEST_URI']);
@@ -20,11 +21,11 @@ $values = array_slice($routeArr, 3);
 
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
 if (class_exists($controllerClass)) {
-    $controller = new $controllerClass(new Render());
+    $controller = new $controllerClass(new TwigRender());
     $controller->values = $values;
     $controller->runAction($actionName);
 } else {
-    $controller = new SiteController(new Render());
+    $controller = new SiteController(new TwigRender());
     $controller->values = $values;
     $controller->runAction($controllerName);
 }
