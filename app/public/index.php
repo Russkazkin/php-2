@@ -22,10 +22,11 @@ $values = array_slice($routeArr, 3);
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
 if (class_exists($controllerClass)) {
     $controller = new $controllerClass(new TwigRender());
-    $controller->values = $values;
-    $controller->runAction($actionName);
 } else {
     $controller = new SiteController(new TwigRender());
-    $controller->values = $values;
-    $controller->runAction($controllerName);
+    $actionName = $controllerName;
 }
+$controller->values = $values;
+$controller->runAction($actionName);
+
+    
