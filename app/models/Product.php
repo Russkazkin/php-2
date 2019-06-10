@@ -29,13 +29,4 @@ class Product extends DbModel
             $this->updateFlags[$key] = false;
         }
     }
-
-    public function getTwigArr()
-    {
-        $propsArr = [];
-        foreach ($this->updateFlags as $key => $flag){
-            $propsArr[$key] = $this->getProp($key);
-        }
-        return $propsArr;
-    }
 }

@@ -7,7 +7,7 @@ use app\engine\Db;
 use \Exception;
 
 
-abstract class DbModel
+abstract class DbModel extends Model
 {
 
     public $updateFlags = [];
@@ -95,7 +95,6 @@ abstract class DbModel
                 $values[$key] = $this->getProp($key);
             }
         }
-        var_dump($updateArr);
         if(!$updateArr) return false;
         $updates = implode(", ", $updateArr);
         $values['id'] = $this->getProp('id');
@@ -110,5 +109,14 @@ abstract class DbModel
             return $this->insert();
         else
             return $this->update();
+    }
+
+    public function getTwigArr()
+    {
+        $propsArr = [];
+        foreach ($this->updateFlags as $key => $flag){
+            $propsArr[$key] = $this->getProp($key);
+        }
+        return $propsArr;
     }
 }
