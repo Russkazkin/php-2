@@ -23,7 +23,7 @@ abstract class DbModel extends Model
             $this->updateFlags[$prop] = true;
             $this->$prop = $value;
         }else{
-            throw new Exception('Cвойство не найдено');
+            throw new Exception('Свойство не найдено');
         }
 
     }

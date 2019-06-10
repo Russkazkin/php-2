@@ -1,6 +1,7 @@
 <?php
-
+session_start();
 require "../config/path.php";
+require "../config/auth.php";
 require ENGINE_DIR . "Autoload.php";
 
 use app\engine\{Autoload, Render, TwigRender};
@@ -21,9 +22,9 @@ $values = array_slice($routeArr, 3);
 
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
 if (class_exists($controllerClass)) {
-    $controller = new $controllerClass(new TwigRender());
+    $controller = new $controllerClass(new Render());
 } else {
-    $controller = new SiteController(new TwigRender());
+    $controller = new SiteController(new Render());
     $actionName = $controllerName;
 }
 $controller->values = $values;
