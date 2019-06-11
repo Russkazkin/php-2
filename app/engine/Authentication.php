@@ -12,7 +12,22 @@ class Authentication
 
     public function cookieAuth()
     {
+        $isAuth = false;
+        if(isset($_COOKIE['user_id']) && isset($_COOKIE['user_hash'])){
+            $id = $_COOKIE['user_id'];
+            $password = $_COOKIE['user_hash'];
+            $sql = "SELECT `id`, `login`, `password`, `name` FROM `user` WHERE `id` = :id";
+            $userData = Db::getInstance()->queryOne($sql, ['id' => $id]);
 
+            if($userData['password'] !== $password || $userData['id'] !== $id){
+                setcookie("user_id", "", time() - 3600*24*30*12, "/");
+                setcookie("user_hash", "", time() - 3600*24*30*12, "/");
+            } else {
+                $isAuth = true;
+                $_SESSION['user'] = $userData;
+            }
+        }
+        return $isAuth;
     }
 
     public function userAuth()
@@ -53,5 +68,14 @@ class Authentication
     public function isLoggedIn()
     {
         return isset($_SESSION['user']);
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['user']);
+        session_destroy();
+        setcookie("user_id", null, time() - 3600*24*30*12, "/");
+        setcookie("user_hash", null, time() - 3600*24*30*12, "/");
+        header('Location: /user/login');
     }
 }

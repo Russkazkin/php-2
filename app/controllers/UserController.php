@@ -33,10 +33,10 @@ class UserController extends Controller
         $this->title = 'Login';
         echo $this->render('user/login', ['heading' => $heading]);
     }
+
     public function actionLogout()
     {
-        unset($_SESSION['user']);
-        session_destroy();
-        header('Location: /');
+        $auth = Authentication::getInstance();
+        $auth->logout();
     }
 }

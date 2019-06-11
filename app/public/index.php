@@ -13,7 +13,7 @@ use app\controllers\{Controller, SiteController};
  */
 
 
-//var_dump($_SESSION['user']);
+// var_dump($_COOKIE);
 require_once VENDOR_DIR . 'autoload.php';
 spl_autoload_register([new Autoload(), 'loadClass']);
 
@@ -25,6 +25,8 @@ $values = array_slice($routeArr, 3);
 
 
 $auth = Authentication::getInstance();
+
+// $auth->cookieAuth();
 
 if( $actionName != 'login' && !$auth->isLoggedIn()){
     header('Location: /user/login');
