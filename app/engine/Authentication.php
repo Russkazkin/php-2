@@ -15,10 +15,24 @@ class Authentication
     {
         $login = $_POST['login'];
         $password = $_POST['password'];
+        $isAuth = false;
 
         $sql = "SELECT `id`, `login`, `password` FROM `user` WHERE `login` = :login";
         $user_data = Db::getInstance()->queryOne($sql, ['login' => $login]);
-        var_dump($user_data);
+        if ($user_data) {
+            if($this->passwordCheck($password, $user_data['password'])){
+                $isAuth = true;
+            }
+        }
+
+        if(isset($_POST['remember']) && $_POST['remember'] == 'remember'){
+            setcookie("user_id", $user_data['id'], time()+86400);
+            setcookie("user_hash", $user_data['password'], time()+86400);
+        }
+
+        $_SESSION['user'] = $user_data;
+
+        return $isAuth;
     }
 
     public function passwordHash($password)

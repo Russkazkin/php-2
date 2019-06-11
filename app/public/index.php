@@ -4,7 +4,7 @@ require "../config/path.php";
 require "../config/auth.php";
 require ENGINE_DIR . "Autoload.php";
 
-use app\engine\{Autoload, Render, TwigRender};
+use app\engine\{Autoload, Render, TwigRender, Authentication};
 use app\controllers\{Controller, SiteController};
 
 /**
@@ -14,10 +14,19 @@ use app\controllers\{Controller, SiteController};
 require_once VENDOR_DIR . 'autoload.php';
 spl_autoload_register([new Autoload(), 'loadClass']);
 
+
 $routeArr = explode('/', $_SERVER['REQUEST_URI']);
 $controllerName = $routeArr[1] ?: 'site';
 $actionName = $routeArr[2];
 $values = array_slice($routeArr, 3);
+
+
+$auth = new Authentication();
+
+if( $actionName != 'login' && !$auth->isLoggedIn()){
+    header('Location: /user/login');
+}
+
 
 
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
