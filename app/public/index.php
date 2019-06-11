@@ -35,9 +35,9 @@ if( $actionName != 'login' && !$auth->isLoggedIn()){
 
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
 if (class_exists($controllerClass)) {
-    $controller = new $controllerClass(new Render());
+    $controller = new $controllerClass(new TwigRender());
 } else {
-    $controller = new SiteController(new Render());
+    $controller = new SiteController(new TwigRender());
     $actionName = $controllerName;
 }
 $controller->values = $values;

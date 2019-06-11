@@ -10,7 +10,7 @@ $this->title = "Страница отладки";
 echo "<h3>Authentication</h3>";
 
 $auth = Authentication::getInstance();
-$password = $auth->passwordHash('ruslan');
+$password = $auth->passwordHash('user');
 echo $password . '<br>';
 if (isset($_POST['login'])){
     $auth->userAuth();
