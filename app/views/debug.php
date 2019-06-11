@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @var Authentication $auth
+ */
 use app\engine\Authentication;
 
 $this->title = "Страница отладки";
@@ -7,7 +9,7 @@ $this->title = "Страница отладки";
 
 echo "<h3>Authentication</h3>";
 
-$auth = new Authentication();
+$auth = Authentication::getInstance();
 $password = $auth->passwordHash('ruslan');
 echo $password . '<br>';
 if (isset($_POST['login'])){

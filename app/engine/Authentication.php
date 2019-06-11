@@ -4,8 +4,12 @@
 namespace app\engine;
 
 
+use app\traits\TSingleton;
+
 class Authentication
 {
+    use TSingleton;
+
     public function cookieAuth()
     {
 
@@ -22,6 +26,7 @@ class Authentication
         if ($user_data) {
             if($this->passwordCheck($password, $user_data['password'])){
                 $isAuth = true;
+                $_SESSION['user'] = $user_data;
             }
         }
 
@@ -29,8 +34,6 @@ class Authentication
             setcookie("user_id", $user_data['id'], time()+86400);
             setcookie("user_hash", $user_data['password'], time()+86400);
         }
-
-        $_SESSION['user'] = $user_data;
 
         return $isAuth;
     }

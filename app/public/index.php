@@ -9,8 +9,12 @@ use app\controllers\{Controller, SiteController};
 
 /**
  * @var Controller $controller
+ * @var Authentication $auth
  */
 
+//unset($_SESSION['user']);
+//session_destroy();
+//var_dump($_SESSION['user']);
 require_once VENDOR_DIR . 'autoload.php';
 spl_autoload_register([new Autoload(), 'loadClass']);
 
@@ -21,7 +25,7 @@ $actionName = $routeArr[2];
 $values = array_slice($routeArr, 3);
 
 
-$auth = new Authentication();
+$auth = Authentication::getInstance();
 
 if( $actionName != 'login' && !$auth->isLoggedIn()){
     header('Location: /user/login');
