@@ -43,10 +43,16 @@
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+               <div>
+                   {% if userName %}
+                       Hello, {{ userName }}!
+                       <a href="/user" class="btn btn-outline-light btn-sm" role="button" aria-pressed="true">Account</a>
+                       <a href="/user/logout" class="btn btn-outline-light btn-sm" role="button" aria-pressed="true">Logout</a>
+                   {% else %}
+                       <a href="/user/login" class="btn btn-outline-light btn-sm" role="button"
+                          aria-pressed="true">Login</a>
+                   {% endif %}
+               </div>
             </div>
         </nav>
     </header>

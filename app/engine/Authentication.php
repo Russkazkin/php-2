@@ -21,18 +21,18 @@ class Authentication
         $password = $_POST['password'];
         $isAuth = false;
 
-        $sql = "SELECT `id`, `login`, `password` FROM `user` WHERE `login` = :login";
-        $user_data = Db::getInstance()->queryOne($sql, ['login' => $login]);
-        if ($user_data) {
-            if($this->passwordCheck($password, $user_data['password'])){
+        $sql = "SELECT `id`, `login`, `password`, `name` FROM `user` WHERE `login` = :login";
+        $userData = Db::getInstance()->queryOne($sql, ['login' => $login]);
+        if ($userData) {
+            if($this->passwordCheck($password, $userData['password'])){
                 $isAuth = true;
-                $_SESSION['user'] = $user_data;
+                $_SESSION['user'] = $userData;
             }
         }
 
         if(isset($_POST['remember']) && $_POST['remember'] == 'remember'){
-            setcookie("user_id", $user_data['id'], time()+86400);
-            setcookie("user_hash", $user_data['password'], time()+86400);
+            setcookie("user_id", $userData['id'], time()+86400);
+            setcookie("user_hash", $userData['password'], time()+86400);
         }
 
         return $isAuth;

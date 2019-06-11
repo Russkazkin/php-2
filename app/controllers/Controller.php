@@ -14,6 +14,7 @@ abstract class Controller
     private $useLayout = true;
     public $values = [];
     public $title = 'Undefined title';
+    public $userName;
     private $renderer;
 
     /**
@@ -23,6 +24,7 @@ abstract class Controller
     public function __construct(IRender $renderer)
     {
         $this->renderer = $renderer;
+        $this->userName = $_SESSION['user']['name'] ?: null;
     }
 
     public function runAction($action = null)
@@ -43,6 +45,7 @@ abstract class Controller
                 [
                     'content' => $this->renderTemplate($template, $params),
                     'title' => $this->title,
+                    'userName' => $this->userName
                 ]
             );
         } else {

@@ -12,8 +12,7 @@ use app\controllers\{Controller, SiteController};
  * @var Authentication $auth
  */
 
-//unset($_SESSION['user']);
-//session_destroy();
+
 //var_dump($_SESSION['user']);
 require_once VENDOR_DIR . 'autoload.php';
 spl_autoload_register([new Autoload(), 'loadClass']);
@@ -42,5 +41,6 @@ if (class_exists($controllerClass)) {
 }
 $controller->values = $values;
 $controller->runAction($actionName);
+
 
     
