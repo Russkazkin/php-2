@@ -11,11 +11,10 @@ class UserController extends Controller
 {
     public function actionIndex()
     {
-
+        $this->title = "User's Account Page";
+        echo $this->render('user/index', ['userName' => $this->userName]);
     }
-    /**
-     * @var Authentication $auth
-     */
+
     public function actionLogin()
     {
         $heading = "Введите ваш логин и пароль";
