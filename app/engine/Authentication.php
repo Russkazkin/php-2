@@ -46,8 +46,8 @@ class Authentication
         }
 
         if(isset($_POST['remember']) && $_POST['remember'] == 'remember'){
-            setcookie("user_id", $userData['id'], time()+86400);
-            setcookie("user_hash", $userData['password'], time()+86400);
+            setcookie("user_id", $userData['id'], time()+86400, "/");
+            setcookie("user_hash", $userData['password'], time()+86400, "/");
         }
 
         return $isAuth;
