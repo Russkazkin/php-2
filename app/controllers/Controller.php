@@ -5,6 +5,7 @@ namespace app\controllers;
 
 
 use app\interfaces\IRender;
+use app\models\Basket;
 
 abstract class Controller
 {
@@ -15,7 +16,6 @@ abstract class Controller
     public $values = [];
     public $title = 'Undefined title';
     public $userName;
-    public $basketCount;
     private $renderer;
 
     /**
@@ -47,7 +47,7 @@ abstract class Controller
                     'content' => $this->renderTemplate($template, $params),
                     'title' => $this->title,
                     'userName' => $this->userName,
-                    'basketCount' => $this->basketCount,
+                    'basketCount' => Basket::getCountWhere('session_id', session_id()),
                 ]
             );
         } else {

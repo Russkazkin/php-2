@@ -48,6 +48,12 @@ abstract class DbModel extends Model
         return $table;
     }
 
+    public static function getCountWhere($field, $value) {
+        $tableName = static::getTableName();
+        $sql = "SELECT count(*) as count FROM {$tableName} WHERE `{$field}`=:{$field}";
+        return Db::getInstance()->queryOne($sql, ["{$field}" => $value])['count'];
+    }
+
     public function insert()
     {
         $tableName = static::getTableName();
