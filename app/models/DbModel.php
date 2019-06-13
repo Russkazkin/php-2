@@ -12,6 +12,13 @@ abstract class DbModel extends Model
 
     public $updateFlags = [];
 
+    public function __construct()
+    {
+        foreach ($this as $key => $value) {
+            $this->updateFlags[$key] = false;
+        }
+    }
+
     public function getProp($prop)
     {
         return $this->$prop;
@@ -73,13 +80,9 @@ abstract class DbModel extends Model
         $binds = substr($binds, 0, -2);
         $sql = "INSERT INTO {$tableName} ({$cols}) VALUES ({$binds})";
 
-        print $sql;
-        print_r($arr);
-
         Db::getInstance()->execute($sql, $arr);
         $this->id = Db::getInstance()->lastInsertId();
 
-        echo "<p>Запись успешно добавлена в таблицу {$tableName} базы данных. ID: {$this->id}</p>";
         return true;
     }
 

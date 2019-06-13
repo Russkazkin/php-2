@@ -24,6 +24,8 @@ class Basket extends DbModel
         $this->session_id = $session_id;
         $this->product_id = $product_id;
         $this->user_id = $user_id;
+
+        parent::__construct();
     }
 
 

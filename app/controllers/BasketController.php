@@ -16,4 +16,10 @@ class BasketController extends Controller
             'products' => Basket::getBasket(session_id())
         ]);
     }
+
+    public function actionAdd()
+    {
+        $id = $_POST['id'];
+        (new Basket(session_id(), $id))->save();
+    }
 }
