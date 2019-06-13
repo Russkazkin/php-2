@@ -15,7 +15,8 @@ $(document).ready(function () {
         })
     });
     $('.delete').on('click', function () {
-        let id = $(this).data('basket');
+        let id = $(this).data('basket'),
+            $that = $(this);
         console.log(id);
         $.ajax({
             url: '/basket/delete',
@@ -27,7 +28,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 $('#basketCount').text(data.count);
-                location.reload();
+                $that.closest('.product-item').remove();
             }
         })
     })
