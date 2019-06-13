@@ -29,5 +29,4 @@ class Product extends DbModel
             $this->updateFlags[$key] = false;
         }
     }
-
 }

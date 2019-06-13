@@ -8,11 +8,13 @@ class SiteController extends Controller
 {
     public function actionIndex()
     {
-        echo $this->render('index', ['heading' => 'Главная страница', 'title' => 'Главная']);
+        $this->title = 'Главная';
+        echo $this->render('index', ['heading' => 'Главная страница']);
     }
 
     public function actionDebug()
     {
+        $this->title = 'Страница дебага';
         echo $this->render('debug');
     }
 }

@@ -4,13 +4,28 @@
 namespace app\controllers;
 
 
-class Controller
+use app\interfaces\IRender;
+
+abstract class Controller
 {
     private $action;
     private $defaultAction = 'index';
     private $layout = 'main';
     private $useLayout = true;
     public $values = [];
+    public $title = 'Undefined title';
+    public $userName;
+    private $renderer;
+
+    /**
+     * Controller constructor.
+     * @param $renderer
+     */
+    public function __construct(IRender $renderer)
+    {
+        $this->renderer = $renderer;
+        $this->userName = $_SESSION['user']['name'] ?: null;
+    }
 
     public function runAction($action = null)
     {
@@ -21,26 +36,25 @@ class Controller
         else
             echo "404";
     }
-    public function render($template, $params = []) {
+
+    public function render($template, $params = [])
+    {
         if ($this->useLayout) {
             return $this->renderTemplate(
                 "layouts/{$this->layout}",
-                ['content' => $this->renderTemplate($template, $params)]
+                [
+                    'content' => $this->renderTemplate($template, $params),
+                    'title' => $this->title,
+                    'userName' => $this->userName
+                ]
             );
         } else {
             return $this->renderTemplate($template, $params);
         }
     }
 
-    public function renderTemplate($template, $params = []) {
-        ob_start();
-        extract($params);
-        $fileName = TEMPLATES_DIR . $template . ".php";
-        if (file_exists($fileName)) {
-            include $fileName;
-        }
-        else
-            echo "404";
-        return ob_get_clean();
+    public function renderTemplate($template, $params = [])
+    {
+        return $this->renderer->renderTemplate($template, $params);
     }
 }

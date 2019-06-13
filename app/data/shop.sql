@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: db
--- Время создания: Июн 07 2019 г., 16:52
+-- Время создания: Июн 12 2019 г., 04:10
 -- Версия сервера: 10.3.15-MariaDB-1:10.3.15+maria~bionic
 -- Версия PHP: 7.2.14
 
@@ -111,6 +111,31 @@ INSERT INTO `product` (`id`, `category_id`, `manufacturer_id`, `name`, `descript
 (100, 2, 1, 'Батон нарезной', 'Батон белый нарезной в полиэтиленовом пакете', '56.45', 'placeholder.png', '2019-06-06 09:26:20', '2019-06-06 09:26:20'),
 (101, 2, 1, 'Молоко топленое, полиэтиленовый пакет', 'Жирность 3.5%', '58.90', 'placeholder.png', '2019-06-06 09:43:58', '2019-06-06 12:08:24');
 
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `login` varchar(64) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `email` varchar(128) CHARACTER SET utf8 NOT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `last_login` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Дамп данных таблицы `user`
+--
+
+INSERT INTO `user` (`id`, `login`, `password`, `name`, `email`, `created`, `modified`, `last_login`) VALUES
+(1, 'ruslan', 'Aui.ef6VhZa1M', 'Rus Skazkin', 'admin@localhost', '2019-06-10 12:57:03', '2019-06-10 12:57:03', '2019-06-10 12:57:03'),
+(2, 'user', 'Au.rea.wRj1mM', 'user', 'user@localhost', '2019-06-11 05:27:35', '2019-06-11 05:27:35', '2019-06-11 05:27:35');
+
 --
 -- Индексы сохранённых таблиц
 --
@@ -141,6 +166,12 @@ ALTER TABLE `product`
   ADD UNIQUE KEY `id` (`id`);
 
 --
+-- Индексы таблицы `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -167,6 +198,12 @@ ALTER TABLE `manufacturer`
 --
 ALTER TABLE `product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+
+--
+-- AUTO_INCREMENT для таблицы `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
