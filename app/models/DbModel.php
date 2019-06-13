@@ -70,7 +70,6 @@ abstract class DbModel extends Model
 
         foreach ($this->updateFlags as $key => $value) {
             if ($key == "updateFlags") continue;
-            echo $key . '<br>';
             $cols .= "{$key}, ";
             $binds .= ":{$key}, ";
             $arr[$key] = $this->getProp($key);

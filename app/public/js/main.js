@@ -10,7 +10,7 @@ $(document).ready(function () {
                 alert('error');
             },
             success: function (data) {
-                console.log(data);
+                $('#basketCount').text(data.count);
             }
         })
     })
