@@ -26,7 +26,7 @@ $values = array_slice($routeArr, 3);
 
 $auth = Authentication::getInstance();
 
-// $auth->cookieAuth();
+$auth->cookieAuth();
 
 if( $actionName != 'login' && !$auth->isLoggedIn()){
     header('Location: /user/login');

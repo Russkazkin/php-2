@@ -5,19 +5,30 @@ namespace app\engine;
 
 
 use app\interfaces\IRender;
+use mysql_xdevapi\Exception;
 use \Twig\Loader\FilesystemLoader;
 use \Twig\Environment;
 
 class TwigRender implements IRender
 {
-    public function renderTemplate($template, $params = []) {
+
+    private $twig;
+
+    public function __construct()
+    {
         $loader = new FilesystemLoader(TWIG_TMPLS);
-        $twig = new Environment($loader, [
+        $this->twig = new Environment($loader, [
             //'cache' => TWIG_TMPLS . 'compilation_cache',
         ]);
-        $template .= '.twig';
-        ob_start();
-        echo $twig->render($template, $params);
-        return ob_get_clean();
+    }
+
+    public function renderTemplate($template, $params = []) {
+        try {
+            return $this->twig->render($template . ".twig", $params);
+        }
+        catch (\Exception $exception) {
+            echo $exception->getMessage();
+            return false;
+        }
     }
 }
