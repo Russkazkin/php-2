@@ -13,5 +13,22 @@ $(document).ready(function () {
                 $('#basketCount').text(data.count);
             }
         })
+    });
+    $('.delete').on('click', function () {
+        let id = $(this).data('basket');
+        console.log(id);
+        $.ajax({
+            url: '/basket/delete',
+            type: 'POST',
+            DataType: 'json',
+            data: {id: id},
+            error: function () {
+                alert('error');
+            },
+            success: function (data) {
+                $('#basketCount').text(data.count);
+                location.reload();
+            }
+        })
     })
 });
