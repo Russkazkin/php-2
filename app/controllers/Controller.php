@@ -15,6 +15,7 @@ abstract class Controller
     public $values = [];
     public $title = 'Undefined title';
     public $userName;
+    public $basketCount;
     private $renderer;
 
     /**
@@ -45,7 +46,8 @@ abstract class Controller
                 [
                     'content' => $this->renderTemplate($template, $params),
                     'title' => $this->title,
-                    'userName' => $this->userName
+                    'userName' => $this->userName,
+                    'basketCount' => $this->basketCount,
                 ]
             );
         } else {
