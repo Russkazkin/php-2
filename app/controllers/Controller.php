@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\engine\Authentication;
 use app\engine\Request;
 use app\interfaces\IRender;
 use app\models\Basket;
@@ -50,7 +51,7 @@ abstract class Controller
                     'content' => $this->renderTemplate($template, $params),
                     'title' => $this->title,
                     'userName' => $this->userName,
-                    'basketCount' => Basket::getCountWhere('session_id', session_id()),
+                    'basketCount' => Basket::getBasketCount(session_id(), Authentication::getInstance()->getUserId()),
                 ]
             );
         } else {

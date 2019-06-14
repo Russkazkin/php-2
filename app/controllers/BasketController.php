@@ -16,15 +16,15 @@ class BasketController extends Controller
         $this->title = "Basket";
         echo $this->render('basket/index', [
             'heading' => 'Корзина',
-            'products' => Basket::getBasket(session_id()),
-            'total' => Basket::getBasketTotal(session_id())
+            'products' => Basket::getBasket(session_id(), Authentication::getInstance()->getUserId()),
+            'total' => Basket::getBasketTotal(session_id(), Authentication::getInstance()->getUserId())
         ]);
     }
 
     public function actionAdd()
     {
         (new Basket(session_id(), (new Request())->getParams()['id'], Authentication::getInstance()->getUserId()))->save();
-        $count = Basket::getCountWhere('session_id', session_id());
+        $count = Basket::getBasketCount(session_id(), Authentication::getInstance()->getUserId());
         $response = [
             'result' => 1,
             'count' => $count,
@@ -37,8 +37,8 @@ class BasketController extends Controller
     {
         $basket = Basket::getOne((new Request())->getParams()['id']);
         $basket->delete();
-        $count = Basket::getCountWhere('session_id', session_id());
-        $total = Basket::getBasketTotal(session_id());
+        $count = Basket::getBasketCount(session_id(), Authentication::getInstance()->getUserId());
+        $total = Basket::getBasketTotal(session_id(), Authentication::getInstance()->getUserId());
         $response = [
             'result' => 1,
             'count' => $count,
