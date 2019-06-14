@@ -15,20 +15,20 @@ $(document).ready(function () {
         })
     });
     $('.delete').on('click', function () {
-        let id = $(this).data('basket'),
-            $that = $(this);
+        let id = $(this).data('basket');
         console.log(id);
         $.ajax({
             url: '/basket/delete',
             type: 'POST',
             DataType: 'json',
             data: {id: id},
+            context: $(this),
             error: function () {
                 alert('error');
             },
             success: function (data) {
                 $('#basketCount').text(data.count);
-                $that.closest('.product-item').remove();
+                $(this).closest('.product-item').remove();
             }
         })
     })
