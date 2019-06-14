@@ -23,7 +23,7 @@ class UserController extends Controller
             header('Location: /');
         }
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])){
+        if($this->request->getMethod() === 'POST' && isset($this->request->getParams()['password'])){
             if(!$auth->userAuth()){
                 $heading = 'Неправильный пользователь и/или пароль!';
             }else{

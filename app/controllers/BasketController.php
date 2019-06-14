@@ -21,9 +21,7 @@ class BasketController extends Controller
 
     public function actionAdd()
     {
-        $request = new Request();
-        $id = $request->getParams()['id'];
-        (new Basket(session_id(), $id))->save();
+        (new Basket(session_id(), (new Request())->getParams()['id']))->save();
         $count = Basket::getCountWhere('session_id', session_id());
         $response = [
             'result' => 1,
@@ -35,9 +33,7 @@ class BasketController extends Controller
 
     public function actionDelete()
     {
-        $request = new Request();
-        $id = $request->getParams()['id'];
-        $basket = Basket::getOne($id);
+        $basket = Basket::getOne((new Request())->getParams()['id']);
         $basket->delete();
         $count = Basket::getCountWhere('session_id', session_id());
         $response = [

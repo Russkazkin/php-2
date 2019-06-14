@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\engine\Request;
 use app\interfaces\IRender;
 use app\models\Basket;
 
@@ -17,6 +18,7 @@ abstract class Controller
     public $title = 'Undefined title';
     public $userName;
     private $renderer;
+    public $request;
 
     /**
      * Controller constructor.
@@ -26,6 +28,7 @@ abstract class Controller
     {
         $this->renderer = $renderer;
         $this->userName = $_SESSION['user']['name'] ?: null;
+        $this->request = new Request();
     }
 
     public function runAction($action = null)

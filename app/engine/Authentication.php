@@ -32,8 +32,10 @@ class Authentication
 
     public function userAuth()
     {
-        $login = $_POST['login'];
-        $password = $_POST['password'];
+        $request = new Request();
+        $login = $request->getParams()['login'];
+        $password = $request->getParams()['password'];
+        $remember = $request->getParams()['remember'];
         $isAuth = false;
 
         $sql = "SELECT `id`, `login`, `password`, `name` FROM `user` WHERE `login` = :login";
@@ -45,7 +47,7 @@ class Authentication
             }
         }
 
-        if(isset($_POST['remember']) && $_POST['remember'] == 'remember'){
+        if(!empty($remember) && $remember == 'remember'){
             setcookie("user_id", $userData['id'], time()+86400, "/");
             setcookie("user_hash", $userData['password'], time()+86400, "/");
         }
