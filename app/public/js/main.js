@@ -27,6 +27,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 $('#basketCount').text(data.count);
+                $('#basketTotal').text(data.total);
                 $(this).closest('.product-item').remove();
             }
         })

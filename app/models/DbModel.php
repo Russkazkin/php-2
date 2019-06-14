@@ -55,10 +55,19 @@ abstract class DbModel extends Model
         return $table;
     }
 
-    public static function getCountWhere($field, $value) {
+    public static function getCountWhere($field, $value)
+    {
         $tableName = static::getTableName();
         $sql = "SELECT count(*) as count FROM {$tableName} WHERE `{$field}`=:{$field}";
         return Db::getInstance()->queryOne($sql, ["{$field}" => $value])['count'];
+    }
+
+    public static function getSumWhere($column, $field, $value)
+    {
+        //Метод не тестировался
+        $tableName = static::getTableName();
+        $sql = "SELECT sum(:column) as `sum` FROM {$tableName} WHERE `{$field}`=:{$field}";
+        return Db::getInstance()->queryOne($sql, ['column' => $column, "{$field}" => $value])['sum'];
     }
 
     public function insert()

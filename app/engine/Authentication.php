@@ -72,6 +72,13 @@ class Authentication
         return isset($_SESSION['user']);
     }
 
+    public function getUserId(){
+        if ($this->isLoggedIn()) {
+            return $_SESSION['user']['id'];
+        }
+        return null;
+    }
+
     public function logout()
     {
         unset($_SESSION['user']);

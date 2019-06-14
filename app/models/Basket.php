@@ -35,4 +35,10 @@ class Basket extends DbModel
     $sql = "SELECT p.id id_product, b.id id_basket, p.name, p.description, p.price, p.img FROM basket b,product p WHERE b.product_id=p.id AND session_id = :session";
     return Db::getInstance()->queryAll($sql, ['session' => $session]);
     }
+
+    public static function getBasketTotal($session, $user = null)
+    {
+        $sql = "SELECT SUM(p.price) as `sum` FROM basket b, product p WHERE b.product_id=p.id AND session_id = :session";
+        return Db::getInstance()->queryOne($sql, ['session' => $session])['sum'];
+    }
 }
