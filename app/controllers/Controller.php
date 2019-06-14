@@ -13,7 +13,7 @@ abstract class Controller
     private $defaultAction = 'index';
     private $layout = 'main';
     private $useLayout = true;
-    public $values = [];
+    public $param;
     public $title = 'Undefined title';
     public $userName;
     private $renderer;

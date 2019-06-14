@@ -4,7 +4,7 @@ require "../config/path.php";
 require "../config/auth.php";
 require ENGINE_DIR . "Autoload.php";
 
-use app\engine\{Autoload, Render, TwigRender, Authentication};
+use app\engine\{Autoload, Render, TwigRender, Authentication, Request};
 use app\controllers\{Controller, SiteController};
 
 /**
@@ -17,12 +17,11 @@ use app\controllers\{Controller, SiteController};
 require_once VENDOR_DIR . 'autoload.php';
 spl_autoload_register([new Autoload(), 'loadClass']);
 
+$request = new Request();
 
-$routeArr = explode('/', $_SERVER['REQUEST_URI']);
-$controllerName = $routeArr[1] ?: 'site';
-$actionName = $routeArr[2];
-$values = array_slice($routeArr, 3);
-
+$controllerName = $request->getControllerName() ?: 'site';
+$actionName = $request->getActionName();
+$actionParam = $request->getActionParam();
 
 $auth = Authentication::getInstance();
 
@@ -41,7 +40,7 @@ if (class_exists($controllerClass)) {
     $controller = new SiteController(new TwigRender());
     $actionName = $controllerName;
 }
-$controller->values = $values;
+$controller->param = $actionParam;
 $controller->runAction($actionName);
 
 
