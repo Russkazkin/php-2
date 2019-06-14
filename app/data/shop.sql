@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: db
--- Время создания: Июн 12 2019 г., 04:10
+-- Время создания: Июн 14 2019 г., 13:42
 -- Версия сервера: 10.3.15-MariaDB-1:10.3.15+maria~bionic
 -- Версия PHP: 7.2.14
 
@@ -30,11 +30,22 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `basket` (
   `id` int(11) NOT NULL,
-  `session_id` int(11) NOT NULL,
-  `$product_id` int(11) NOT NULL,
+  `session_id` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
   `modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Дамп данных таблицы `basket`
+--
+
+INSERT INTO `basket` (`id`, `session_id`, `product_id`, `user_id`, `created`, `modified`) VALUES
+(44, '19af66c647079b7a1c3e5bceddf8fd49', 1, 2, '2019-06-14 13:11:22', '2019-06-14 13:11:22'),
+(45, '19af66c647079b7a1c3e5bceddf8fd49', 98, NULL, '2019-06-14 13:15:58', '2019-06-14 13:16:52'),
+(46, 'd3060640516a77bee57b3471d0f4690b', 96, 2, '2019-06-14 13:17:50', '2019-06-14 13:17:50'),
+(47, '19af66c647079b7a1c3e5bceddf8fd49', 100, 2, '2019-06-14 13:30:52', '2019-06-14 13:30:52');
 
 -- --------------------------------------------------------
 
@@ -179,7 +190,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT для таблицы `category`
