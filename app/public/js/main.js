@@ -16,7 +16,6 @@ $(document).ready(function () {
     });
     $('.delete').on('click', function () {
         let id = $(this).data('basket');
-        console.log(id);
         $.ajax({
             url: '/basket/delete',
             type: 'POST',
