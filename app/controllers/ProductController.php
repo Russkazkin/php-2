@@ -20,6 +20,9 @@ class ProductController extends Controller
         $id = $this->values[0];
         $product = Product::getOne($id);
         $this->title = $product->getProp('name');
-        echo $this->render('product/card', ['product' => $product->getTwigArr()]);
+        echo $this->render('product/card', [
+            'product' => $product->getTwigArr(),
+            'id' => $product->getProp('id')
+        ]);
     }
 }
