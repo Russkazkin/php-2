@@ -35,16 +35,24 @@ class BasketController extends Controller
 
     public function actionDelete()
     {
+        /**
+         * @var Basket $basket
+         */
         $basket = Basket::getOne((new Request())->getParams()['id']);
-        $basket->delete();
-        $count = Basket::getBasketCount(session_id(), Authentication::getInstance()->getUserId());
-        $total = Basket::getBasketTotal(session_id(), Authentication::getInstance()->getUserId());
-        $response = [
-            'result' => 1,
-            'count' => $count,
-            'total' => $total
-        ];
-        header('Content-Type: application/json');
-        echo json_encode($response);
+        if (session_id() == $basket->getProp('session_id') || Authentication::getInstance()->getUserId() ==
+            $basket->getProp('user_id')) {
+            $basket->delete();
+            $count = Basket::getBasketCount(session_id(), Authentication::getInstance()->getUserId());
+            $total = Basket::getBasketTotal(session_id(), Authentication::getInstance()->getUserId());
+            $response = [
+                'result' => 1,
+                'count' => $count,
+                'total' => $total
+            ];
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        } else {
+            echo json_encode(['response' => 0]);
+        }
     }
 }
