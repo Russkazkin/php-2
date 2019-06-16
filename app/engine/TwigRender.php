@@ -5,7 +5,7 @@ namespace app\engine;
 
 
 use app\interfaces\IRender;
-use mysql_xdevapi\Exception;
+use \Exception;
 use \Twig\Loader\FilesystemLoader;
 use \Twig\Environment;
 
@@ -26,7 +26,7 @@ class TwigRender implements IRender
         try {
             return $this->twig->render($template . ".twig", $params);
         }
-        catch (\Exception $exception) {
+        catch (Exception $exception) {
             echo $exception->getMessage();
             return false;
         }

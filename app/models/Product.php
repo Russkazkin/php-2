@@ -25,8 +25,6 @@ class Product extends DbModel
         $this->price = $price;
         $this->img = $img;
 
-        foreach ($this as $key => $value) {
-            $this->updateFlags[$key] = false;
-        }
+        parent::__construct();
     }
 }

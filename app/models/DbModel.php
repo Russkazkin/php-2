@@ -12,6 +12,13 @@ abstract class DbModel extends Model
 
     public $updateFlags = [];
 
+    public function __construct()
+    {
+        foreach ($this as $key => $value) {
+            $this->updateFlags[$key] = false;
+        }
+    }
+
     public function getProp($prop)
     {
         return $this->$prop;
@@ -48,6 +55,21 @@ abstract class DbModel extends Model
         return $table;
     }
 
+    public static function getCountWhere($field, $value)
+    {
+        $tableName = static::getTableName();
+        $sql = "SELECT count(*) as count FROM {$tableName} WHERE `{$field}`=:{$field}";
+        return Db::getInstance()->queryOne($sql, ["{$field}" => $value])['count'];
+    }
+
+    public static function getSumWhere($column, $field, $value)
+    {
+        //Метод не тестировался
+        $tableName = static::getTableName();
+        $sql = "SELECT sum(:column) as `sum` FROM {$tableName} WHERE `{$field}`=:{$field}";
+        return Db::getInstance()->queryOne($sql, ['column' => $column, "{$field}" => $value])['sum'];
+    }
+
     public function insert()
     {
         $tableName = static::getTableName();
@@ -57,7 +79,6 @@ abstract class DbModel extends Model
 
         foreach ($this->updateFlags as $key => $value) {
             if ($key == "updateFlags") continue;
-            echo $key . '<br>';
             $cols .= "{$key}, ";
             $binds .= ":{$key}, ";
             $arr[$key] = $this->getProp($key);
@@ -67,13 +88,9 @@ abstract class DbModel extends Model
         $binds = substr($binds, 0, -2);
         $sql = "INSERT INTO {$tableName} ({$cols}) VALUES ({$binds})";
 
-        print $sql;
-        print_r($arr);
-
         Db::getInstance()->execute($sql, $arr);
         $this->id = Db::getInstance()->lastInsertId();
 
-        echo "<p>Запись успешно добавлена в таблицу {$tableName} базы данных. ID: {$this->id}</p>";
         return true;
     }
 
@@ -82,7 +99,6 @@ abstract class DbModel extends Model
         $tableName = static::getTableName();
         $sql = "DELETE FROM {$tableName} WHERE id = :id";
         Db::getInstance()->execute($sql, ['id' => $this->id]);
-        echo "<p>Удалена запись с ID: {$this->id} из таблицы {$tableName}</p>";
     }
     public function update()
     {

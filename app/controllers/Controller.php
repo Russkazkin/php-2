@@ -4,7 +4,10 @@
 namespace app\controllers;
 
 
+use app\engine\Authentication;
+use app\engine\Request;
 use app\interfaces\IRender;
+use app\models\Basket;
 
 abstract class Controller
 {
@@ -12,10 +15,11 @@ abstract class Controller
     private $defaultAction = 'index';
     private $layout = 'main';
     private $useLayout = true;
-    public $values = [];
+    public $param;
     public $title = 'Undefined title';
     public $userName;
     private $renderer;
+    public $request;
 
     /**
      * Controller constructor.
@@ -25,6 +29,7 @@ abstract class Controller
     {
         $this->renderer = $renderer;
         $this->userName = $_SESSION['user']['name'] ?: null;
+        $this->request = new Request();
     }
 
     public function runAction($action = null)
@@ -45,7 +50,8 @@ abstract class Controller
                 [
                     'content' => $this->renderTemplate($template, $params),
                     'title' => $this->title,
-                    'userName' => $this->userName
+                    'userName' => $this->userName,
+                    'basketCount' => Basket::getBasketCount(session_id(), Authentication::getInstance()->getUserId()),
                 ]
             );
         } else {

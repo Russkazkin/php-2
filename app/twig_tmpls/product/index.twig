@@ -8,7 +8,11 @@
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text">{{ product.description }}</p>
             <p class="card-price">{{ product.price }}</p>
-            <a href="/product/card/{{ product.id }}" class="btn btn-primary">Подробнее</a>
+            <a href="/product/card/{{ product.id }}" class="btn btn-primary btn-sm">More</a>
+            <button role="button"
+                    data-id="{{ product.id }}"
+                    class="btn btn-success btn-sm buy">Buy
+            </button>
         </div>
     </div>
     {% endfor %}
