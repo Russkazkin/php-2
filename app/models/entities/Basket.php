@@ -1,12 +1,12 @@
 <?php
 
 
-namespace app\models;
+namespace app\models\entities;
 
 
 use app\engine\Db;
 
-class Basket extends DbModel
+class Basket extends DataEntity
 {
     public $id;
     public $session_id;
