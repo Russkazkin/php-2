@@ -19,6 +19,9 @@ class ProductController extends Controller
     {
         $id = $this->param;
         $product = (new ProductRepository())->getOne($id);
+        if(!$product){
+            throw new \Exception('Product not found', 404);
+        }
         $this->title = $product->getProp('name');
         echo $this->render('product/card', [
             'product' => $product->getTwigArr(),

@@ -15,7 +15,7 @@ use app\controllers\{Controller, SiteController};
 
 try {
     require_once VENDOR_DIR . 'autoload.php';
-    spl_autoload_register([new Autoload(), 'loadClass']);
+    //spl_autoload_register([new Autoload(), 'loadClass']);
 
     $request = new Request();
 
@@ -47,6 +47,12 @@ catch (Exception $exception) {
         http_response_code(404);
         include('404.php');
         die();
+    } elseif ($exception->getCode() == 401){
+        http_response_code(401);
+        include('401.php');
+        die();
+    } else {
+        var_dump($exception);
     }
 }
 
