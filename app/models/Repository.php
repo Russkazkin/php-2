@@ -5,35 +5,16 @@ namespace app\models;
 
 
 use app\engine\Db;
+use app\models\entities\DataEntity;
 use Exception;
 
 abstract class Repository
 {
-    public $updateFlags = [];
     protected $db;
 
     public function __construct()
     {
-        foreach ($this as $key => $value) {
-            $this->updateFlags[$key] = false;
-        }
         $this->db = Db::getInstance();
-    }
-
-    public function getProp($prop)
-    {
-        return $this->$prop;
-    }
-
-    public function setProp($prop, $value)
-    {
-        if(isset($this->$prop)) {
-            $this->updateFlags[$prop] = true;
-            $this->$prop = $value;
-        }else{
-            throw new Exception('Свойство не найдено');
-        }
-
     }
 
     public function getOne($id)
@@ -42,18 +23,12 @@ abstract class Repository
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
         return $this->db->queryObject($sql, ['id' => $id], static::class);
     }
+
     public function getAll()
     {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName}";
         return $this->db->queryAll($sql);
-    }
-
-    public function getTableName()
-    {
-        $class = get_called_class();
-        $table = strtolower(end(explode('\\', $class)));
-        return $table;
     }
 
     public function getCountWhere($field, $value)
@@ -71,14 +46,14 @@ abstract class Repository
         return $this->db->queryOne($sql, ['column' => $column, "{$field}" => $value])['sum'];
     }
 
-    public function insert()
+    public function insert(DataEntity $entity)
     {
         $tableName = $this->getTableName();
         $cols = '';
         $binds = '';
         $arr = [];
 
-        foreach ($this->updateFlags as $key => $value) {
+        foreach ($entity->updateFlags as $key => $value) {
             if ($key == "updateFlags") continue;
             $cols .= "{$key}, ";
             $binds .= ":{$key}, ";
@@ -90,16 +65,16 @@ abstract class Repository
         $sql = "INSERT INTO {$tableName} ({$cols}) VALUES ({$binds})";
 
         $this->db->execute($sql, $arr);
-        $this->id = $this->db->lastInsertId();
+        $entity->id = $this->db->lastInsertId();
 
         return true;
     }
 
-    public function delete()
+    public function delete(DataEntity $entity)
     {
         $tableName = $this->getTableName();
         $sql = "DELETE FROM {$tableName} WHERE id = :id";
-        $this->db->execute($sql, ['id' => $this->id]);
+        $this->db->execute($sql, ['id' => $entity->id]);
     }
     public function update()
     {
@@ -120,9 +95,9 @@ abstract class Repository
         return true;
     }
 
-    public function save()
+    public function save(DataEntity $entity)
     {
-        if (is_null($this->id))
+        if (is_null($entity->id))
             return $this->insert();
         else
             return $this->update();

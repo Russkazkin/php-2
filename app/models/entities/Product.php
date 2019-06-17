@@ -1,8 +1,9 @@
 <?php
 
-namespace app\models;
+namespace app\models\entities;
 
-class Product extends DbModel
+
+class Product extends DataEntity
 {
     protected $category_id;
     protected $manufacturer_id;
