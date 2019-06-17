@@ -7,7 +7,7 @@ namespace app\controllers;
 use app\engine\Authentication;
 use app\engine\Request;
 use app\interfaces\IRender;
-use app\models\Basket;
+use app\models\repositories\BasketRepository;
 
 abstract class Controller
 {
@@ -51,7 +51,7 @@ abstract class Controller
                     'content' => $this->renderTemplate($template, $params),
                     'title' => $this->title,
                     'userName' => $this->userName,
-                    'basketCount' => Basket::getBasketCount(session_id(), Authentication::getInstance()->getUserId()),
+                    'basketCount' => (new BasketRepository())->getBasketCount(session_id(), Authentication::getInstance()->getUserId())
                 ]
             );
         } else {

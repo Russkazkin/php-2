@@ -4,9 +4,10 @@
 namespace app\models\repositories;
 
 
-use app\models\User;
+use app\models\entities\User;
+use app\models\Repository;
 
-class UserRepository
+class UserRepository extends Repository
 {
     public function getEntityClass()
     {

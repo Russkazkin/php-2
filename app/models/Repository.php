@@ -21,7 +21,7 @@ abstract class Repository
     {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
-        return $this->db->queryObject($sql, ['id' => $id], static::class);
+        return $this->db->queryObject($sql, ['id' => $id], $this->getEntityClass());
     }
 
     public function getAll()
@@ -76,20 +76,20 @@ abstract class Repository
         $sql = "DELETE FROM {$tableName} WHERE id = :id";
         $this->db->execute($sql, ['id' => $entity->id]);
     }
-    public function update()
+    public function update(DataEntity $entity)
     {
         $tableName = $this->getTableName();
         $updateArr = [];
         $values = [];
-        foreach ($this->updateFlags as $key => $value){
+        foreach ($entity->updateFlags as $key => $value){
             if($value){
                 $updateArr[] = "`{$key}` = :{$key}";
-                $values[$key] = $this->getProp($key);
+                $values[$key] = $entity->getProp($key);
             }
         }
         if(!$updateArr) return false;
         $updates = implode(", ", $updateArr);
-        $values['id'] = $this->getProp('id');
+        $values['id'] = $entity->getProp('id');
         $sql = "UPDATE `{$tableName}` SET {$updates} WHERE `id` = :id";
         $this->db->execute($sql, $values);
         return true;
@@ -98,9 +98,9 @@ abstract class Repository
     public function save(DataEntity $entity)
     {
         if (is_null($entity->id))
-            return $this->insert();
+            return $this->insert($entity);
         else
-            return $this->update();
+            return $this->update($entity);
     }
 
     public function getTwigArr()
@@ -111,4 +111,8 @@ abstract class Repository
         }
         return $propsArr;
     }
+
+    abstract public function getTableName();
+
+    abstract public function getEntityClass();
 }
