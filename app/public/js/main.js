@@ -26,9 +26,13 @@ $(document).ready(function () {
                 alert('error');
             },
             success: function (data) {
-                $('#basketCount').text(data.count);
-                $('#basketTotal').text(data.total);
-                $(this).closest('.product-item').remove();
+                if(data.result === 1){
+                    $('#basketCount').text(data.count);
+                    $('#basketTotal').text(data.total);
+                    $(this).closest('.product-item').remove();
+                } else {
+                    console.log(data);
+                }
             }
         })
     })

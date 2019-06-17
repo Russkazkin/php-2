@@ -3,14 +3,14 @@
 namespace app\controllers;
 
 
-use app\models\Product;
+use app\models\repositories\ProductRepository;
 
 class ProductController extends Controller
 {
 
     public function actionIndex()
     {
-        $products = Product::getAll();
+        $products = (new ProductRepository())->getAll();
         $this->title = 'Каталог';
         echo $this->render('product/index', ['products' => $products, 'heading' => 'Каталог']);
     }
@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function actionCard()
     {
         $id = $this->param;
-        $product = Product::getOne($id);
+        $product = (new ProductRepository())->getOne($id);
         $this->title = $product->getProp('name');
         echo $this->render('product/card', [
             'product' => $product->getTwigArr(),

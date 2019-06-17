@@ -57,7 +57,7 @@ abstract class Repository
             if ($key == "updateFlags") continue;
             $cols .= "{$key}, ";
             $binds .= ":{$key}, ";
-            $arr[$key] = $this->getProp($key);
+            $arr[$key] = $entity->getProp($key);
         }
 
         $cols = substr($cols, 0, -2);
@@ -101,15 +101,6 @@ abstract class Repository
             return $this->insert($entity);
         else
             return $this->update($entity);
-    }
-
-    public function getTwigArr()
-    {
-        $propsArr = [];
-        foreach ($this->updateFlags as $key => $flag){
-            $propsArr[$key] = $this->getProp($key);
-        }
-        return $propsArr;
     }
 
     abstract public function getTableName();
