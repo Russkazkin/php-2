@@ -3,3 +3,4 @@ docker_php2/mariadb/
 .DS_Store
 app/vendor/
 twig_tmpls/compilation_cache/
+.phpunit.result.cache
