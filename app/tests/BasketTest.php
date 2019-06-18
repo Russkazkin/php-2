@@ -34,7 +34,8 @@ class BasketTest extends TestCase
     }
 
     public function testNamespace(){
-        $this->assertEquals(0, strpos(Basket::class, "App\\"));
+        $this->assertSame(0, strpos(get_class($this->fixture), "app\\"));
         $this->assertEquals(['models'], array_slice(explode("\\", get_class($this->fixture)), 1, 1));
+        $this->assertEquals(3, substr_count(get_class($this->fixture), "\\"));
     }
 }
