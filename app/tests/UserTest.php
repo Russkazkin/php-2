@@ -9,16 +9,21 @@ use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
 {
+
     /**
+     * @param $login
+     * @param $password
+     * @param $name
+     * @param $email
      * @dataProvider providerObjectCreation
      */
-    public function testObjectCreation($a, $b, $c, $d)
+    public function testObjectCreation($login, $password, $name, $email)
     {
-        $user = new User($a, $b, $c, $d);
-        $this->assertEquals($a, $user->getProp('login'));
-        $this->assertEquals($b, $user->getProp('password'));
-        $this->assertEquals($c, $user->getProp('name'));
-        $this->assertEquals($d, $user->getProp('email'));
+        $user = new User($login, $password, $name, $email);
+        $this->assertEquals($login, $user->getProp('login'));
+        $this->assertEquals($password, $user->getProp('password'));
+        $this->assertEquals($name, $user->getProp('name'));
+        $this->assertEquals($email, $user->getProp('email'));
     }
 
     public function providerObjectCreation()
