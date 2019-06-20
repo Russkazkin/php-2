@@ -1,9 +1,10 @@
 <?php
 
 
-namespace app\models;
+namespace app\models\entities;
 
-class User extends DbModel
+
+class User extends DataEntity
 {
     protected $id;
     protected $login;

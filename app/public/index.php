@@ -13,35 +13,48 @@ use app\controllers\{Controller, SiteController};
  */
 
 
-// var_dump($_COOKIE);
-require_once VENDOR_DIR . 'autoload.php';
-spl_autoload_register([new Autoload(), 'loadClass']);
+try {
+    require_once VENDOR_DIR . 'autoload.php';
+    //spl_autoload_register([new Autoload(), 'loadClass']);
 
-$request = new Request();
+    $request = new Request();
 
-$controllerName = $request->getControllerName() ?: 'site';
-$actionName = $request->getActionName();
-$actionParam = $request->getActionParam();
+    $controllerName = $request->getControllerName() ?: 'site';
+    $actionName = $request->getActionName();
+    $actionParam = $request->getActionParam();
 
-$auth = Authentication::getInstance();
+    $auth = Authentication::getInstance();
 
-$auth->cookieAuth();
+    $auth->cookieAuth();
 
-if( $actionName != 'login' && !$auth->isLoggedIn()){
-    header('Location: /user/login');
+    if ($actionName != 'login' && !$auth->isLoggedIn()) {
+        header('Location: /user/login');
+    }
+
+
+    $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
+    if (class_exists($controllerClass)) {
+        $controller = new $controllerClass(new TwigRender());
+    } else {
+        $controller = new SiteController(new TwigRender());
+        $actionName = $controllerName;
+    }
+    $controller->param = $actionParam;
+    $controller->runAction($actionName);
 }
-
-
-
-$controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
-if (class_exists($controllerClass)) {
-    $controller = new $controllerClass(new TwigRender());
-} else {
-    $controller = new SiteController(new TwigRender());
-    $actionName = $controllerName;
+catch (Exception $exception) {
+    if ($exception->getCode() == 404) {
+        http_response_code(404);
+        include('404.php');
+        die();
+    } elseif ($exception->getCode() == 401){
+        http_response_code(401);
+        include('401.php');
+        die();
+    } else {
+        var_dump($exception);
+    }
 }
-$controller->param = $actionParam;
-$controller->runAction($actionName);
 
 
     

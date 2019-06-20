@@ -6,8 +6,8 @@ namespace app\controllers;
 
 use app\engine\Authentication;
 use app\engine\Request;
-use app\models\Basket;
-use app\models\Product;
+use app\models\entities\Basket;
+use app\models\repositories\BasketRepository;
 
 class BasketController extends Controller
 {
@@ -16,15 +16,16 @@ class BasketController extends Controller
         $this->title = "Basket";
         echo $this->render('basket/index', [
             'heading' => 'Корзина',
-            'products' => Basket::getBasket(session_id(), Authentication::getInstance()->getUserId()),
-            'total' => Basket::getBasketTotal(session_id(), Authentication::getInstance()->getUserId())
+            'products' => (new BasketRepository())->getBasket(session_id(), Authentication::getInstance()->getUserId()),
+            'total' => (new BasketRepository())->getBasketTotal(session_id(), Authentication::getInstance()->getUserId())
         ]);
     }
 
     public function actionAdd()
     {
-        (new Basket(session_id(), (new Request())->getParams()['id'], Authentication::getInstance()->getUserId()))->save();
-        $count = Basket::getBasketCount(session_id(), Authentication::getInstance()->getUserId());
+        $basket = new Basket(session_id(), (new Request())->getParams()['id'], Authentication::getInstance()->getUserId());
+        (new BasketRepository())->save($basket);
+        $count = (new BasketRepository())->getBasketCount(session_id(), Authentication::getInstance()->getUserId());
         $response = [
             'result' => 1,
             'count' => $count,
@@ -38,12 +39,11 @@ class BasketController extends Controller
         /**
          * @var Basket $basket
          */
-        $basket = Basket::getOne((new Request())->getParams()['id']);
-        if (session_id() == $basket->getProp('session_id') || Authentication::getInstance()->getUserId() ==
-            $basket->getProp('user_id')) {
-            $basket->delete();
-            $count = Basket::getBasketCount(session_id(), Authentication::getInstance()->getUserId());
-            $total = Basket::getBasketTotal(session_id(), Authentication::getInstance()->getUserId());
+        $basket = (new BasketRepository())->getOne((new Request())->getParams()['id']);
+        if (session_id() == $basket->getProp('session_id') || Authentication::getInstance()->getUserId() == $basket->getProp('user_id')) {
+            (new BasketRepository())->delete($basket);
+            $count = (new BasketRepository())->getBasketCount(session_id(), Authentication::getInstance()->getUserId());
+            $total = (new BasketRepository())->getBasketTotal(session_id(), Authentication::getInstance()->getUserId());
             $response = [
                 'result' => 1,
                 'count' => $count,

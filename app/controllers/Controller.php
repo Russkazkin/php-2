@@ -7,7 +7,8 @@ namespace app\controllers;
 use app\engine\Authentication;
 use app\engine\Request;
 use app\interfaces\IRender;
-use app\models\Basket;
+use app\models\repositories\BasketRepository;
+use \Exception;
 
 abstract class Controller
 {
@@ -36,10 +37,11 @@ abstract class Controller
     {
         $this->action = $action ?: $this->defaultAction;
         $method = "action" . ucfirst($this->action);
-        if (method_exists($this, $method))
+        if (method_exists($this, $method)) {
             $this->$method();
-        else
-            echo "404";
+        } else {
+            throw new Exception('Page not found', 404);
+        }
     }
 
     public function render($template, $params = [])
@@ -51,7 +53,7 @@ abstract class Controller
                     'content' => $this->renderTemplate($template, $params),
                     'title' => $this->title,
                     'userName' => $this->userName,
-                    'basketCount' => Basket::getBasketCount(session_id(), Authentication::getInstance()->getUserId()),
+                    'basketCount' => (new BasketRepository())->getBasketCount(session_id(), Authentication::getInstance()->getUserId())
                 ]
             );
         } else {
