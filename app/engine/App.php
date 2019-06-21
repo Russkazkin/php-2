@@ -2,6 +2,7 @@
 
 
 namespace app\engine;
+use app\controllers\SiteController;
 use app\models\repositories\BasketRepository;
 use app\models\repositories\ProductRepository;
 use app\models\repositories\UserRepository;
@@ -31,6 +32,7 @@ class App
 
     private $controller;
     private $action;
+    private $actionParam;
 
     /**
      * @return static
@@ -69,15 +71,20 @@ class App
 
     public function runController()
     {
-        $this->controller = $this->request->getControllerName() ?: 'product';
+        $this->controller = $this->request->getControllerName() ?: 'site';
         $this->action = $this->request->getActionName();
+        $this->actionParam = $this->request->getActionParam();
 
         $controllerClass = $this->config['controllers_namespaces'] . ucfirst($this->controller) . "Controller";
 
         if (class_exists($controllerClass)) {
-            $controller = new $controllerClass(new Render());
-            $controller->runAction($this->action);
+            $controller = new $controllerClass(new TwigRender());
+        } else {
+            $controller = new SiteController(new TwigRender());
+            $actionName = $this->controller;
         }
+        $controller->param = $this->actionParam;
+        $controller->runAction($actionName);
     }
 
     //Чтобы обращаться к компонентам как к свойствам, переопределим геттер
