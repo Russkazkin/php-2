@@ -3,31 +3,29 @@
 
 namespace app\engine;
 
-use app\traits\TSingleton;
 use \PDO;
 use PDOException;
 
 class Db
 {
-    use TSingleton;
-
-    private $config = [
-        'driver' => 'mysql',
-        'host' => 'app_db',
-        'login' => 'shop',
-        'password' => 'shop',
-        'database' => 'shop',
-        'charset' => 'utf8'
-    ];
-
-
     /**
      * @var PDO $connection
      */
+    private $config;
     private $connection = null;
 
+    public function __construct($driver, $host, $login, $password, $database, $charset = "utf8")
+    {
+        $this->config['driver'] = $driver;
+        $this->config['host'] = $host;
+        $this->config['login'] = $login;
+        $this->config['password'] = $password;
+        $this->config['database'] = $database;
+        $this->config['charset'] = $charset;
+    }
 
-    public function getConnection() {
+    private function getConnection()
+    {
         try {
             if (is_null($this->connection)) {
                 $this->connection = new PDO($this->prepareDsnString(),
@@ -36,7 +34,6 @@ class Db
                 );
                 $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             }
-
             return $this->connection;
         }catch (PDOException $e) {
             print "Error!: " . $e->getMessage() . "<br/>";

@@ -2,6 +2,7 @@
     "require": {
         "twig/twig": "^2.0",
         "ext-json": "*",
+        "ext-pdo": "*",
         "phpunit/phpunit": "^8.2"
     },
     "autoload": {

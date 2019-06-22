@@ -10,6 +10,13 @@ class Authentication
 {
     use TSingleton;
 
+    protected $db;
+
+    public function __construct()
+    {
+        $this->db = App::call()->db;
+    }
+
     public function cookieAuth()
     {
         $isAuth = false;
@@ -39,7 +46,7 @@ class Authentication
         $isAuth = false;
 
         $sql = "SELECT `id`, `login`, `password`, `name` FROM `user` WHERE `login` = :login";
-        $userData = Db::getInstance()->queryOne($sql, ['login' => $login]);
+        $userData = $this->db->queryOne($sql, ['login' => $login]);
         if ($userData) {
             if($this->passwordCheck($password, $userData['password'])){
                 $isAuth = true;

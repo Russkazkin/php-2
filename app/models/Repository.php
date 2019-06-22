@@ -4,7 +4,7 @@
 namespace app\models;
 
 
-use app\engine\Db;
+use app\engine\App;
 use app\models\entities\DataEntity;
 use Exception;
 
@@ -14,7 +14,7 @@ abstract class Repository
 
     public function __construct()
     {
-        $this->db = Db::getInstance();
+        $this->db = App::call()->db;
     }
 
     public function getOne($id)
