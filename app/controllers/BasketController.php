@@ -6,9 +6,7 @@ namespace app\controllers;
 
 use app\engine\App;
 use app\engine\Authentication;
-use app\engine\Request;
 use app\models\entities\Basket;
-use app\models\repositories\BasketRepository;
 
 class BasketController extends Controller
 {

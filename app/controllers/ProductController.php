@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 
+use app\engine\App;
 use app\models\repositories\ProductRepository;
 
 class ProductController extends Controller
@@ -10,7 +11,7 @@ class ProductController extends Controller
 
     public function actionIndex()
     {
-        $products = (new ProductRepository())->getAll();
+        $products = App::call()->productRepository->getAll();
         $this->title = 'Каталог';
         echo $this->render('product/index', ['products' => $products, 'heading' => 'Каталог']);
     }
@@ -18,7 +19,7 @@ class ProductController extends Controller
     public function actionCard()
     {
         $id = $this->param;
-        $product = (new ProductRepository())->getOne($id);
+        $product = App::call()->productRepository->getOne($id);
         if(!$product){
             throw new \Exception('Product not found', 404);
         }
