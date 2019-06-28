@@ -4,7 +4,6 @@ namespace app\controllers;
 
 
 use app\engine\App;
-use app\models\repositories\ProductRepository;
 
 class ProductController extends Controller
 {

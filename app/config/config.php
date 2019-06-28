@@ -12,6 +12,7 @@ return [
     'root_dir' => __DIR__ . "/../",
     'templates_dir' => __DIR__ . "/../views/",
     'controllers_namespaces' => 'app\controllers\\',
+    'salt' => 'Joon2eeshoogh1oo',
     'components' => [
         'db' => [
             'class' => Db::class,
