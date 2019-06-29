@@ -3,6 +3,7 @@
 //define("DIR_ROOT", $_SERVER['DOCUMENT_ROOT']);
 //define("DS", DIRECTORY_SEPARATOR);
 use app\engine\Request;
+use app\engine\Session;
 use app\models\repositories\BasketRepository;
 use app\models\repositories\ProductRepository;
 use app\models\repositories\UserRepository;
@@ -25,6 +26,9 @@ return [
         ],
         'request' => [
             'class' => Request::class
+        ],
+        'session' => [
+            'class' => Session::class
         ],
         //По хорошему сделать для репозиториев отедьное простое хранилище
         //без reflection

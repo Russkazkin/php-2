@@ -6,7 +6,6 @@ namespace app\models;
 
 use app\engine\App;
 use app\models\entities\DataEntity;
-use Exception;
 
 abstract class Repository
 {
