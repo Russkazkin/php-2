@@ -4,8 +4,7 @@
 namespace app\controllers;
 
 
-use app\engine\Authentication;
-use app\engine\Request;
+use app\engine\App;
 use app\interfaces\IRender;
 use app\models\repositories\BasketRepository;
 use \Exception;
@@ -21,6 +20,8 @@ abstract class Controller
     public $userName;
     private $renderer;
     public $request;
+    protected $authentication;
+    protected $user_id;
 
     /**
      * Controller constructor.
@@ -29,8 +30,10 @@ abstract class Controller
     public function __construct(IRender $renderer)
     {
         $this->renderer = $renderer;
+        $this->authentication = App::call()->authentication;
+        $this->user_id = $this->authentication->getUserId();
         $this->userName = $_SESSION['user']['name'] ?: null;
-        $this->request = new Request();
+        $this->request = App::call()->request;
     }
 
     public function runAction($action = null)
@@ -53,7 +56,7 @@ abstract class Controller
                     'content' => $this->renderTemplate($template, $params),
                     'title' => $this->title,
                     'userName' => $this->userName,
-                    'basketCount' => (new BasketRepository())->getBasketCount(session_id(), Authentication::getInstance()->getUserId())
+                    'basketCount' => (new BasketRepository())->getBasketCount(session_id(), $this->user_id)
                 ]
             );
         } else {

@@ -4,17 +4,16 @@
 namespace app\engine;
 
 
-use app\traits\TSingleton;
 
 class Authentication
 {
-    use TSingleton;
-
-    protected $db;
+    private $db;
+    private $session;
 
     public function __construct()
     {
         $this->db = App::call()->db;
+        $this->session = App::call()->session;
     }
 
     public function cookieAuth()
@@ -31,7 +30,7 @@ class Authentication
                 setcookie("user_hash", "", time() - 3600*24*30*12, "/");
             } else {
                 $isAuth = true;
-                $_SESSION['user'] = $userData;
+                $this->session->setProp('user', $userData);
             }
         }
         return $isAuth;
@@ -50,7 +49,7 @@ class Authentication
         if ($userData) {
             if($this->passwordCheck($password, $userData['password'])){
                 $isAuth = true;
-                $_SESSION['user'] = $userData;
+                $this->session->setProp('user', $userData);
             }
         }
 
@@ -76,20 +75,20 @@ class Authentication
 
     public function isLoggedIn()
     {
-        return isset($_SESSION['user']);
+        return $this->session->getProp('user');
     }
 
     public function getUserId(){
-        if ($this->isLoggedIn()) {
-            return $_SESSION['user']['id'];
+        $user = $this->session->getProp('user');
+        if ($user) {
+            return $user['id'];
         }
         return null;
     }
 
     public function logout()
     {
-        unset($_SESSION['user']);
-        session_destroy();
+        $this->session->unsetProp('user');
         setcookie("user_id", null, time() - 3600*24*30*12, "/");
         setcookie("user_hash", null, time() - 3600*24*30*12, "/");
         header('Location: /user/login');

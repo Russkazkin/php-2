@@ -10,6 +10,7 @@ class Session
     public function setProp($prop, $value)
     {
         $_SESSION[$prop] = $value;
+        return $value;
     }
 
     public function getProp($prop)

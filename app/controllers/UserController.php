@@ -4,9 +4,6 @@
 namespace app\controllers;
 
 
-use app\engine\Authentication;
-
-
 class UserController extends Controller
 {
     public function actionIndex()
@@ -18,13 +15,12 @@ class UserController extends Controller
     public function actionLogin()
     {
         $heading = "Введите ваш логин и пароль";
-        $auth = Authentication::getInstance();
-        if ($auth->isLoggedIn()) {
+        if ($this->authentication->isLoggedIn()) {
             header('Location: /');
         }
 
         if($this->request->getMethod() === 'POST' && isset($this->request->getParams()['password'])){
-            if(!$auth->userAuth()){
+            if(!$this->authentication->userAuth()){
                 $heading = 'Неправильный пользователь и/или пароль!';
             }else{
                 header('Location: /');
@@ -36,7 +32,6 @@ class UserController extends Controller
 
     public function actionLogout()
     {
-        $auth = Authentication::getInstance();
-        $auth->logout();
+        $this->authentication->logout();
     }
 }

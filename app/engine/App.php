@@ -13,6 +13,7 @@ use app\traits\TSingleton;
  * Class App
  * @property Request $request
  * @property Session $session
+ * @property Authentication $authentication;
  * @property BasketRepository $basketRepository
  * @property UserRepository $userRepository
  * @property ProductRepository $productRepository
