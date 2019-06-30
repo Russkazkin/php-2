@@ -32,7 +32,7 @@ abstract class Controller
         $this->renderer = $renderer;
         $this->authentication = App::call()->authentication;
         $this->user_id = $this->authentication->getUserId();
-        $this->userName = $_SESSION['user']['name'] ?: null;
+        $this->userName = $this->authentication->getUserName();
         $this->request = App::call()->request;
     }
 

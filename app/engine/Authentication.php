@@ -86,6 +86,14 @@ class Authentication
         return null;
     }
 
+    public function getUserName(){
+        $user = $this->session->getProp('user');
+        if ($user) {
+            return $user['name'];
+        }
+        return null;
+    }
+
     public function logout()
     {
         $this->session->unsetProp('user');
