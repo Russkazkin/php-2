@@ -1,23 +1,29 @@
 <h1>{{ heading }}</h1>
-<h2>Итого: <span id="basketTotal">{{ total }}</span></h2>
+
 
 <div class="products-wrap">
     {% if products %}
-        {% for product in products %}
-            <div class="card product-item mb-4" style="width: 18rem;">
-                <img src="/img/{{ product.img }}" class="card-img-top" alt="{{ product.name }} img">
-                <div class="card-body bg-dark">
-                    <h5 class="card-title">{{ product.name }}</h5>
-                    <p class="card-text">{{ product.description }}</p>
-                    <p class="card-price">{{ product.price }}</p>
-                    <button role="button"
-                            data-basket="{{ product.id_basket }}"
-                            class="btn btn-danger delete">Delete
-                    </button>
+        <h2>Итого: <span id="basketTotal">{{ total }}</span></h2>
+        <div class="products-list-wrap">
+            {% for product in products %}
+                <div class="card product-item mb-4" style="width: 18rem;">
+                    <img src="/img/{{ product.img }}" class="card-img-top" alt="{{ product.name }} img">
+                    <div class="card-body bg-dark">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="card-price">{{ product.price }}</p>
+                        <button role="button"
+                                data-basket="{{ product.id_basket }}"
+                                class="btn btn-danger delete">Delete
+                        </button>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="order-button">
+            <a href="/order/add/" class="btn btn-success">Order</a>
+        </div>
     {% else %}
-    <p>Корзина пуста</p>
+        <p>Корзина пуста</p>
     {% endif %}
 </div>
