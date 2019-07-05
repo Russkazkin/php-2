@@ -22,8 +22,6 @@ class User extends DataEntity
         $this->name = $name;
         $this->email = $email;
 
-        foreach ($this as $key => $value) {
-            $this->updateFlags[$key] = false;
-        }
+        parent::__construct();
     }
 }
