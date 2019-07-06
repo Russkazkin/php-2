@@ -1,16 +1,14 @@
 <?php
 
 
-namespace app\models;
+namespace app\models\entities;
 
 
 use app\models\entities\DataEntity;
 
 class Order extends DataEntity
 {
-    protected $id;
     protected $status;
-
     /**
      * Order constructor.
      * @param $status

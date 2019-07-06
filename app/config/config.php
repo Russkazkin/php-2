@@ -8,6 +8,7 @@ use app\engine\Authentication;
 use app\models\repositories\BasketRepository;
 use app\models\repositories\ProductRepository;
 use app\models\repositories\UserRepository;
+use app\models\repositories\OrderRepository;
 use app\engine\Db;
 
 return [
@@ -44,6 +45,9 @@ return [
         ],
         'userRepository' => [
             'class' => UserRepository::class
+        ],
+        'orderRepository' => [
+            'class' => OrderRepository::class
         ]
 
     ]

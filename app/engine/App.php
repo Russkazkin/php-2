@@ -4,6 +4,7 @@
 namespace app\engine;
 use app\controllers\SiteController;
 use app\models\repositories\BasketRepository;
+use app\models\repositories\OrderRepository;
 use app\models\repositories\ProductRepository;
 use app\models\repositories\UserRepository;
 use app\traits\TSingleton;
@@ -17,6 +18,7 @@ use app\traits\TSingleton;
  * @property BasketRepository $basketRepository
  * @property UserRepository $userRepository
  * @property ProductRepository $productRepository
+ * @property OrderRepository $orderRepository
  * @property Db $db
  */
 
