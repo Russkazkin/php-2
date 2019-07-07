@@ -23,4 +23,14 @@ class OrderController extends Controller
             'total' => App::call()->basketRepository->getBasketTotal(session_id(), $this->user_id)
         ]);
     }
+
+    public function actionConfirm()
+    {
+        $response = [
+            'result' => 1,
+            'test' => 'php side sends response'
+        ];
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
 }
