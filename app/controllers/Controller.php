@@ -20,6 +20,7 @@ abstract class Controller
     public $userName;
     private $renderer;
     public $request;
+    protected $session;
     protected $authentication;
     protected $user_id;
 
@@ -31,6 +32,7 @@ abstract class Controller
     {
         $this->renderer = $renderer;
         $this->authentication = App::call()->authentication;
+        $this->session = App::call()->session;
         $this->user_id = $this->authentication->getUserId();
         $this->userName = $this->authentication->getUserName();
         $this->request = App::call()->request;

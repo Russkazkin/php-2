@@ -12,8 +12,11 @@ class OrderController extends Controller
     public function actionCreate()
     {
         $this->title = "Order confirmation";
-        $order = new Order($this->user_id,0);
-        App::call()->orderRepository->save($order);
+        if($this->session->getProp('status') === null){
+            $order = new Order($this->user_id,0);
+            App::call()->orderRepository->save($order);
+            $this->session->setProp('status', 0);
+        }
         echo $this->render('order/index', [
             'heading' => 'Подтверждение заказа',
             'products' => App::call()->basketRepository->getBasket(session_id(), $this->user_id),

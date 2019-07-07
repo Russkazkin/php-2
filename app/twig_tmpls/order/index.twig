@@ -10,7 +10,7 @@
     </thead>
     <tbody>
         {% for product in products %}
-        <tr>
+        <tr class="product-item">
             <td>{{ product.name }}</td>
             <td>{{ product.price }}</td>
             <td>
@@ -23,7 +23,8 @@
         {% endfor %}
         <tr>
             <td>Total:</td>
-            <td>{{ total }}</td>
+            <td id="basketTotal">{{ total }}</td>
+            <td></td>
         </tr>
     </tbody>
 </table>
