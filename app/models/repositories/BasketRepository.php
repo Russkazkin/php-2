@@ -20,6 +20,12 @@ class BasketRepository extends Repository
         return $this->db->queryAll($sql, $params);
     }
 
+    public function getOrderContent($id)
+    {
+        $sql = "SELECT p.id id_product, b.id id_basket, b.order_id id_order, p.name, p.description, p.price, p.img FROM basket b,product p WHERE (b.product_id=p.id AND order_id=:id)";
+        return $this->db->queryAll($sql, ['id' => $id]);
+    }
+
     public function getBasketTotal($session, $user = null)
     {
         $sql = "SELECT SUM(p.price) as `sum` FROM basket b, product p WHERE b.product_id=p.id AND session_id = :session";

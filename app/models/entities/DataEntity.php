@@ -25,7 +25,7 @@ abstract class DataEntity extends Model
 
     public function setProp($prop, $value)
     {
-        if(isset($this->$prop)) {
+        if(property_exists(static::class, $prop)) {
             $this->updateFlags[$prop] = true;
             $this->$prop = $value;
         }else{
