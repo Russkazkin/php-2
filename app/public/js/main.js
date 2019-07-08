@@ -36,19 +36,4 @@ $(document).ready(function () {
             }
         })
     });
-    $('#order-confirm').on('click', function () {
-        $.ajax({
-            url: '/order/confirm',
-            type: 'POST',
-            DataType: 'json',
-            error: function () {
-                alert('error');
-            },
-            success: function (data) {
-                if(data.result === 1){
-                    console.log(data);
-                }
-            }
-        })
-    });
 });

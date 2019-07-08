@@ -25,10 +25,11 @@ class OrderController extends Controller
                 App::call()->basketRepository->save($item);
             }
         }
-        echo $this->render('order/index', [
+        echo $this->render('order/create', [
             'heading' => 'Подтверждение заказа',
             'products' => App::call()->basketRepository->getOrderContent(App::call()->session->getProp('order_id')),
-            'total' => App::call()->basketRepository->getBasketTotal(session_id(), $this->user_id)
+            'total' => App::call()->basketRepository->getBasketTotal(session_id(), $this->user_id),
+            'order_id' => $this->session->getProp('order_id')
         ]);
     }
 
