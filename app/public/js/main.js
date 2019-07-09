@@ -36,4 +36,9 @@ $(document).ready(function () {
             }
         })
     });
+    $('.setStatus').on('click', function (event) {
+        event.preventDefault();
+        let id = $(this).data('order-id');
+        console.log(id);
+    })
 });

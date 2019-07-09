@@ -55,4 +55,9 @@ class OrderController extends Controller
             'total' =>App::call()->orderRepository->getOrderTotal($id)
         ]);
     }
+
+    public function actionStatus()
+    {
+
+    }
 }
