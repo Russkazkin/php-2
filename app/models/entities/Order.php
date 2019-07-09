@@ -4,8 +4,6 @@
 namespace app\models\entities;
 
 
-use app\models\entities\DataEntity;
-
 class Order extends DataEntity
 {
     protected $user_id;

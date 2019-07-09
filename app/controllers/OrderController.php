@@ -35,11 +35,14 @@ class OrderController extends Controller
 
     public function actionConfirm()
     {
-        $response = [
-            'result' => 1,
-            'test' => 'php side sends response'
-        ];
-        header('Content-Type: application/json');
-        echo json_encode($response);
+        $this->title = "Order info";
+        $id = $this->request->getActionParam();
+        App::call()->orderRepository->setStatus($id, 2);
+
+        echo $this->render('order/confirm', [
+            'heading' => 'Order info',
+            'info' => App::call()->orderRepository->getOrderInfo($id),
+            'total' =>App::call()->orderRepository->getOrderTotal($id)
+        ]);
     }
 }
