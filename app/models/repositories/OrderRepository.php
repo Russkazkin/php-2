@@ -20,10 +20,17 @@ class OrderRepository extends Repository
         return Order::class;
     }
 
-    public function setStatus($id, $status) {
+    public function setStatus($id, $status)
+    {
         $order = $this->getOne($id);
         $order->setProp('status', $status);
         return $this->save($order);
+    }
+
+    public function getOrders()
+    {
+        $sql =  "SELECT o.id id_order, o.status, o.created, u.id id_user, u.name, u.email FROM orders o, user u WHERE o.user_id=u.id";
+        return $this->db->queryAll($sql);
     }
 
     public function getOrderInfo($id)

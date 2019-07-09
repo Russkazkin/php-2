@@ -9,6 +9,16 @@ use app\models\entities\Order;
 
 class OrderController extends Controller
 {
+    public function actionIndex()
+    {
+        var_dump(App::call()->orderRepository->getOrders());
+        $this->title = "Orders admin panel";
+        echo $this->render('order/index', [
+            'heading' => 'Orders admin panel',
+            'orders' => App::call()->orderRepository->getOrders(),
+        ]);
+    }
+
     public function actionCreate()
     {
         $this->title = "Order confirmation";
