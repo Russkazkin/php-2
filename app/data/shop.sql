@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: db
--- Время создания: Июн 18 2019 г., 14:04
+-- Время создания: Июл 10 2019 г., 05:16
 -- Версия сервера: 10.3.15-MariaDB-1:10.3.15+maria~bionic
 -- Версия PHP: 7.2.14
 
@@ -33,6 +33,7 @@ CREATE TABLE `basket` (
   `session_id` varchar(255) CHARACTER SET utf8 NOT NULL,
   `product_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `order_id` int(255) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
   `modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -41,11 +42,24 @@ CREATE TABLE `basket` (
 -- Дамп данных таблицы `basket`
 --
 
-INSERT INTO `basket` (`id`, `session_id`, `product_id`, `user_id`, `created`, `modified`) VALUES
-(49, '19af66c647079b7a1c3e5bceddf8fd49', 96, NULL, '2019-06-16 06:45:27', '2019-06-16 06:45:44'),
-(51, '19af66c647079b7a1c3e5bceddf8fd49', 1, 2, '2019-06-17 06:13:12', '2019-06-17 06:13:12'),
-(52, '19af66c647079b7a1c3e5bceddf8fd49', 98, 2, '2019-06-17 06:26:34', '2019-06-17 06:26:34'),
-(53, '19af66c647079b7a1c3e5bceddf8fd49', 104, 2, '2019-06-17 06:56:57', '2019-06-17 06:56:57');
+INSERT INTO `basket` (`id`, `session_id`, `product_id`, `user_id`, `order_id`, `created`, `modified`) VALUES
+(2, '46ef5160af3aefa4c4d6993893634ee0', 2, 2, 2, '2019-07-07 06:53:11', '2019-07-08 05:22:57'),
+(6, '46ef5160af3aefa4c4d6993893634ee0', 96, 2, 2, '2019-07-07 09:44:58', '2019-07-08 05:22:57'),
+(8, '46ef5160af3aefa4c4d6993893634ee0', 1, 2, 2, '2019-07-08 05:05:29', '2019-07-08 05:22:57'),
+(9, 'd5274f4b2b91ca926861bbee89b64967', 1, 1, 3, '2019-07-09 05:31:24', '2019-07-09 05:31:36'),
+(10, 'd5274f4b2b91ca926861bbee89b64967', 98, 1, 3, '2019-07-09 05:31:25', '2019-07-09 05:31:36'),
+(11, 'd5274f4b2b91ca926861bbee89b64967', 104, 1, 3, '2019-07-09 05:31:28', '2019-07-09 05:31:36'),
+(13, '316374b5e529c6041ea4aa4006fd0aa5', 98, NULL, 5, '2019-07-10 04:49:11', '2019-07-10 05:06:30'),
+(14, '316374b5e529c6041ea4aa4006fd0aa5', 100, NULL, 5, '2019-07-10 04:49:12', '2019-07-10 05:06:30'),
+(15, '316374b5e529c6041ea4aa4006fd0aa5', 101, NULL, 5, '2019-07-10 04:49:13', '2019-07-10 05:06:30'),
+(16, '316374b5e529c6041ea4aa4006fd0aa5', 104, NULL, 5, '2019-07-10 04:49:15', '2019-07-10 05:06:30'),
+(17, 'd3060640516a77bee57b3471d0f4690b', 1, NULL, 4, '2019-07-10 05:01:17', '2019-07-10 05:03:25'),
+(18, 'd3060640516a77bee57b3471d0f4690b', 2, NULL, 4, '2019-07-10 05:01:18', '2019-07-10 05:03:25'),
+(19, '3f21ba267c738ca7e9cb3dec9fff4e36', 1, NULL, 6, '2019-07-10 05:14:35', '2019-07-10 05:15:02'),
+(20, '3f21ba267c738ca7e9cb3dec9fff4e36', 2, NULL, 6, '2019-07-10 05:14:36', '2019-07-10 05:15:02'),
+(21, '3f21ba267c738ca7e9cb3dec9fff4e36', 1, NULL, 6, '2019-07-10 05:14:37', '2019-07-10 05:15:02'),
+(22, '3f21ba267c738ca7e9cb3dec9fff4e36', 2, NULL, 6, '2019-07-10 05:14:39', '2019-07-10 05:15:02'),
+(23, '3f21ba267c738ca7e9cb3dec9fff4e36', 96, NULL, 6, '2019-07-10 05:14:39', '2019-07-10 05:15:02');
 
 -- --------------------------------------------------------
 
@@ -93,6 +107,31 @@ INSERT INTO `manufacturer` (`id`, `name`, `description`, `created`, `modified`) 
 (1, 'Кубанская буренка', 'Краснодарский молокозавод', '2019-06-03 11:55:37', '2019-06-03 11:55:37'),
 (2, 'Центральный хлебокомбинат', 'Краснодарский хлеб', '2019-06-03 11:55:37', '2019-06-03 11:55:37'),
 (102, 'Pepsi', 'Сочинский завод PEPSI', '2019-06-17 06:41:02', '2019-06-17 06:41:02');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `status`, `created`, `modified`) VALUES
+(2, 2, 3, '2019-07-08 05:22:57', '2019-07-09 17:03:53'),
+(3, 1, 4, '2019-07-09 05:31:36', '2019-07-10 05:07:15'),
+(4, 3, 2, '2019-07-10 05:03:25', '2019-07-10 05:03:41'),
+(5, 3, 2, '2019-07-10 05:06:30', '2019-07-10 05:06:33'),
+(6, 3, 2, '2019-07-10 05:15:02', '2019-07-10 05:15:05');
 
 -- --------------------------------------------------------
 
@@ -148,7 +187,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `login`, `password`, `name`, `email`, `created`, `modified`, `last_login`) VALUES
 (1, 'ruslan', 'Aui.ef6VhZa1M', 'Rus Skazkin', 'admin@localhost', '2019-06-10 12:57:03', '2019-06-10 12:57:03', '2019-06-10 12:57:03'),
-(2, 'user', 'Au.rea.wRj1mM', 'user', 'user@localhost', '2019-06-11 05:27:35', '2019-06-11 05:27:35', '2019-06-11 05:27:35');
+(2, 'user', 'Au.rea.wRj1mM', 'user', 'user@localhost', '2019-06-11 05:27:35', '2019-06-11 05:27:35', '2019-06-11 05:27:35'),
+(3, 'admin', 'AutID61LF5kso', 'Super Admin', 'admin@localhost', '2019-07-10 04:43:06', '2019-07-10 04:43:06', '2019-07-10 04:43:06');
 
 --
 -- Индексы сохранённых таблиц
@@ -173,6 +213,12 @@ ALTER TABLE `manufacturer`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `product`
 --
 ALTER TABLE `product`
@@ -193,7 +239,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT для таблицы `category`
@@ -208,6 +254,12 @@ ALTER TABLE `manufacturer`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
+-- AUTO_INCREMENT для таблицы `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT для таблицы `product`
 --
 ALTER TABLE `product`
@@ -217,7 +269,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

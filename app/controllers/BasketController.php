@@ -21,7 +21,7 @@ class BasketController extends Controller
 
     public function actionAdd()
     {
-        $basket = new Basket(session_id(), App::call()->request->getParams()['id'], $this->user_id);
+        $basket = new Basket(session_id(), $this->request->getParams()['id'], $this->user_id);
         App::call()->basketRepository->save($basket);
         $count = App::call()->basketRepository->getBasketCount(session_id(), $this->user_id);
         $response = [
@@ -37,7 +37,7 @@ class BasketController extends Controller
         /**
          * @var Basket $basket
          */
-        $basket = App::call()->basketRepository->getOne(App::call()->request->getParams()['id']);
+        $basket = App::call()->basketRepository->getOne($this->request->getParams()['id']);
         if (session_id() == $basket->getProp('session_id') || $this->user_id == $basket->getProp('user_id')) {
             App::call()->basketRepository->delete($basket);
             $count = App::call()->basketRepository->getBasketCount(session_id(),$this->user_id);

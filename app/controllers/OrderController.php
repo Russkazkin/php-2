@@ -11,7 +11,8 @@ class OrderController extends Controller
 {
     public function actionIndex()
     {
-        var_dump(App::call()->orderRepository->getOrders());
+
+        // var_dump(App::call()->orderRepository->getOrders());
         $this->title = "Orders admin panel";
         echo $this->render('order/index', [
             'heading' => 'Orders admin panel',
@@ -21,6 +22,9 @@ class OrderController extends Controller
 
     public function actionCreate()
     {
+        if(!App::call()->authentication->isLoggedIn()){
+            header('Location: /user/login');
+        }
         $this->title = "Order confirmation";
         if($this->session->getProp('order_status') === null){
             $order = new Order($this->user_id,1);
@@ -35,6 +39,8 @@ class OrderController extends Controller
                 App::call()->basketRepository->save($item);
             }
         }
+        $this->session->unsetProp('order_status');
+        // var_dump($this->session->getProp('order_status'));
         echo $this->render('order/create', [
             'heading' => 'Подтверждение заказа',
             'products' => App::call()->basketRepository->getOrderContent(App::call()->session->getProp('order_id')),
@@ -58,6 +64,21 @@ class OrderController extends Controller
 
     public function actionStatus()
     {
-
+        $id = $this->request->getParams()['order_id'];
+        $status = $this->request->getParams()['status'];
+        $result = App::call()->orderRepository->setStatus($id, $status);
+        if($result){
+            $response = [
+                'result' => 1,
+                'message' => "Order's status was successfully set to {$status}"
+            ];
+        }else{
+            $response = [
+                'result' => 0,
+                'message' => "ERROR"
+            ];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($response);
     }
 }

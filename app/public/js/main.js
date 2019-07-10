@@ -38,7 +38,30 @@ $(document).ready(function () {
     });
     $('.setStatus').on('click', function (event) {
         event.preventDefault();
-        let id = $(this).data('order-id');
-        console.log(id);
+        let order_id = $(this).data('order-id'),
+            name = 'order-' + order_id,
+            status = $('input[name=' + name + ']:checked').val();
+
+        console.log(name);
+        console.log('id: ' + order_id);
+        console.log('status: ' + status);
+
+        $.ajax({
+            url: '/order/status',
+            type: 'POST',
+            DataType: 'json',
+            data: {order_id: order_id, status: status},
+            context: $(this),
+            error: function () {
+                alert('error');
+            },
+            success: function (data) {
+                if(data.result === 1){
+                    alert(data.message);
+                } else {
+                    console.log(data.message);
+                }
+            }
+        })
     })
 });
